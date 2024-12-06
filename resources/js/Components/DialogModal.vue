@@ -40,8 +40,11 @@ const close = () => {
             </div>
         </div>
 
-        <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 text-end">
-            <slot name="footer" />
-        </div>
+        <!-- Solo renderiza el slot footer si está definido -->
+        <template v-if="$slots.footer">
+            <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 text-end">
+                <slot name="footer" />
+            </div>
+        </template>
     </Modal>
 </template>

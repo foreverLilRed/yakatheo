@@ -1,3 +1,4 @@
+
 <script setup>
 import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
@@ -50,6 +51,9 @@ const logout = () => {
                 </NavLink>
                 <NavLink :href="route('profile.show')" :active="route().current('profile.show')">
                     Profile
+                </NavLink>
+                <NavLink :href="route('productors')" :active="route().current('productors')">
+                    Gestionar Productores
                 </NavLink>
                 <!-- Add more navigation links as needed -->
             </nav>

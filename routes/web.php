@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductorController;
+use App\Http\Controllers\SealsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,3 +24,8 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+Route::get('/productors',[ProductorController::class,'index'])->name('productors');
+Route::post('/productors/store',[ProductorController::class,'store'])->name('productors-store');
+
+Route::get('/fetch/seals', [SealsController::class, 'fetch'])->name('fetch-seals');

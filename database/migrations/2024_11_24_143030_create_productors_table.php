@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('names');
             $table->string('surnames');
             $table->string('dni');
+            $table->dateTime('birthday');
             $table->timestamps();
         });
     }
