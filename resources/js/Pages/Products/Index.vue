@@ -1,6 +1,6 @@
 <script>
 import Paginator from "@/Components/Paginator.vue";
-import ProductorsTable from "@/Components/ProductorsTable.vue";
+import ProductsTable from "@/Components/ProductsTable.vue";
 import RegisterProductor from "@/Components/RegisterProductor.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import throttle from "lodash/throttle";
@@ -9,11 +9,11 @@ export default {
     components: {
         AppLayout,
         Paginator,
-        ProductorsTable,
+        ProductsTable,
         RegisterProductor,
     },
     props: {
-        productors: Array
+        products: Array
     },
     data() {
         return {
@@ -25,7 +25,7 @@ export default {
     watch: {
         "form.search": throttle(function (newSearch) {
             this.$inertia.get(
-                "/productors",
+                "/products",
                 { search: newSearch },
                 { preserveState: true }
             );
@@ -35,10 +35,10 @@ export default {
 </script>
 
 <template>
-    <AppLayout title="Productores">
+    <AppLayout title="Productos">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Productores
+                Productos
             </h2>
         </template>
 
@@ -54,14 +54,12 @@ export default {
                         v-model="form.search"
                         type="search"
                         class="input grow placeholder:italic"
-                        placeholder="Buscar por nombre, apellidos o dni..."
+                        placeholder="Buscar por nombre,..."
                     />
                 </label>
-                <RegisterProductor></RegisterProductor>
             </div>
-
-            <ProductorsTable :productors="productors.data" class="my-6"></ProductorsTable>
-            <Paginator :links="productors.links"></Paginator>
+            <ProductsTable :products="products.data"></ProductsTable>
+            <Paginator :links="products.links"></Paginator>
         </div>
     </AppLayout>
 </template>

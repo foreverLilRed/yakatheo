@@ -1,4 +1,6 @@
 <script setup>
+import RegisterTerrain from './RegisterTerrain.vue';
+
 const data = defineProps({
     productors: Array
 })
@@ -9,12 +11,24 @@ const data = defineProps({
     <table class="table-xs table">
       <thead>
         <tr>
-          <th v-for="(value, key) in data.productors[0]" :key="key">{{ key }}</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>DNI</th>
+          <th>Nacimiento</th>
+          <th>Certificaciones</th>
+          <th>Terrenos</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="productor in data.productors" :key="productor.id">
-          <td v-for="(value, key) in productor" :key="key">{{ value }}</td>
+        <tr class="hover:bg-gray-200" v-for="productor in data.productors" :key="productor.id">
+          <td>{{ productor.nombres }}</td>
+          <td>{{ productor.apellidos }}</td>
+          <td>{{ productor.dni }}</td>
+          <td>{{ productor.nacimiento }}</td>
+          <td>{{ productor.certificaciones }}</td>
+          <td>{{ productor.tierras ? productor.tierras : 0}}</td>
+          <td><RegisterTerrain :productor="productor"/></td>
         </tr>
       </tbody>
     </table>

@@ -27,7 +27,8 @@ class ProductorController extends Controller
                     'apellidos' => $productor->surnames,
                     'dni' => $productor->dni,
                     'nacimiento' => $productor->birthday,
-                    'certificaciones' => $productor->seals->count()
+                    'certificaciones' => $productor->seals->count(),
+                    'tierras' => $productor->terrains->count()
                 ])
         ]);
     }
@@ -49,7 +50,7 @@ class ProductorController extends Controller
 
     public function store(Request $request)
     {
-        $validate = $request->validate(
+        $request->validate(
             [
                 'names' => 'required|string|max:255',
                 'surnames' => 'required|string|max:255',
@@ -78,6 +79,11 @@ class ProductorController extends Controller
             'birthday' => $request->birthday,
         ]);
     
-        $productor->seals()->sync($request->seal);
+        if ($request->has('seal')) {
+            $productor->seals()->sync($request->seal);
+        }    
+        
     }
+
+    
 }

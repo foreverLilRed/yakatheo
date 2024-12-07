@@ -20,10 +20,16 @@ class Productor extends Model
         return $this->belongsToMany(Seal::class, 'productor_seal');
     }
 
+    public function terrains(){
+        return $this->hasMany(Terrain::class);
+    }
+
     public function scopeFilter($query, $search)
     {
         if ($search) {
-            return $query->where('names', 'like', "%{$search}%"); // Filtrar por 'names'
+            return $query->where('names', 'like', "%{$search}%")
+                         ->orWhere('surnames', 'like', "%{$search}%")
+                         ->orWhere('dni', 'like', "%{$search}%");
         }
 
         return $query;
