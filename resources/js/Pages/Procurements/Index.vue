@@ -1,8 +1,6 @@
 <script>
 import Paginator from "@/Components/Paginator.vue";
-import ProductsTable from "@/Components/ProductsTable.vue";
-import RegisterProduct from "@/Components/RegisterProduct.vue";
-import RegisterProductor from "@/Components/RegisterProductor.vue";
+import RegisterProcurement from "@/Components/RegisterProcurement.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import throttle from "lodash/throttle";
 
@@ -10,12 +8,10 @@ export default {
     components: {
         AppLayout,
         Paginator,
-        ProductsTable,
-        RegisterProduct,
-        RegisterProductor,
+        RegisterProcurement
     },
     props: {
-        products: {
+        procurements: {
             type: Object, 
             required: true,
         },
@@ -30,7 +26,7 @@ export default {
     watch: {
         "form.search": throttle(function (newSearch) {
             this.$inertia.get(
-                "/products",
+                "/procurements",
                 { search: newSearch },
                 { preserveState: true }
             );
@@ -40,15 +36,15 @@ export default {
 </script>
 
 <template>
-    <AppLayout title="Productos">
+    <AppLayout title="Acopios">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Productos
+                Acopios
             </h2>
         </template>
 
         <div class="px-12 py-12">
-            <div class="flex items-center space-x-4 mb-6">
+            <div class="flex items-center space-x-4">
                 <label class="input-group max-w-sm flex-grow">
                     <span class="input-group-text">
                         <span
@@ -59,13 +55,13 @@ export default {
                         v-model="form.search"
                         type="search"
                         class="input grow placeholder:italic"
-                        placeholder="Buscar por nombre,..."
+                        placeholder="Buscar por nombre, apellidos o dni..."
                     />
                 </label>
-                <RegisterProduct></RegisterProduct>
+                <RegisterProcurement></RegisterProcurement>
             </div>
-            <ProductsTable :products="products.data"></ProductsTable>
-            <Paginator :links="products.links"></Paginator>
+            {{ procurements.data }}
+            <Paginator :links="procurements.links"></Paginator>
         </div>
     </AppLayout>
 </template>

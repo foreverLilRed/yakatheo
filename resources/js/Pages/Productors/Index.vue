@@ -13,7 +13,10 @@ export default {
         RegisterProductor,
     },
     props: {
-        productors: Array
+        productors: {
+            type: Object, 
+            required: true,
+        },
     },
     data() {
         return {

@@ -44,7 +44,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'name' => 'required|string|max:255',
+            ],
+            [
+                'name.required' => 'El campo nombre es obligatorio.',
+            ]
+        );
+        Product::create([
+            'name' => $request->name
+        ]);
     }
 
     /**
@@ -78,4 +88,23 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function fetch(){
+        return response()->json(Product::all());
+    }
+
+    public function adjustement(Request $request) {
+        $weight = $request->weight;
+        $i = $request->i;
+        $penalize = 0;
+    
+        if ($i >= 8) {
+            $penalize = floor($weight / 50);
+        }
+    
+        $adjustedWeight = $weight - $penalize;
+    
+        return response()->json(['adjustedWeight' => $request]);
+    }
+    
 }

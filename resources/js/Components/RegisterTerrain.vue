@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, toRaw, watch } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import DialogModal from "./DialogModal.vue";
 import InputError from "./InputError.vue";
 import SaveButton from "./SaveButton.vue";
@@ -22,18 +22,48 @@ const form = useForm({
     hr_prod: "",
 });
 
+const terrains = ref({})
+const isLoading = ref(false);
+
 const area_total = ref("");
-const area_production = ref("")
+const area_production = ref("");
+
+watch(modalStatus, (newStatus) => {
+    if (newStatus) {
+        isLoading.value = true; // Activar spinner
+        axios
+            .get(`/fetch/terrains/${data.productor.id}`)
+            .then((response) => {
+                terrains.value = response.data; // Asignar datos al ref
+            })
+            .catch((error) => {
+                console.error("Error al obtener los datos:", error);
+            })
+            .finally(() => {
+                isLoading.value = false; // Desactivar spinner
+            });
+    }
+});
+
 
 function registerTerrain() {
-    form.hr_total = toRaw(area_total.value)
-    form.hr_prod = toRaw(area_production.value)
-    form.post((route("terrains-store")))
+    form.hr_total = toRaw(area_total.value);
+    form.hr_prod = toRaw(area_production.value);
+    form.post(route("terrains-store"), {
+        onSuccess: () => {
+            form.reset();
+            area_total.value = '';
+            area_production.value = ''
+            modalStatus.value = false;
+        },
+    });
 }
 
 watch([area_total, area_production], ([newTotal, newProduction]) => {
-    newProduction > newTotal ? area_production.value = area_total.value : null
-})
+    newProduction > newTotal
+        ? (area_production.value = area_total.value)
+        : null;
+});
 </script>
 
 <template>
@@ -46,6 +76,21 @@ watch([area_total, area_production], ([newTotal, newProduction]) => {
         >
 
         <template #content>
+            <div v-if="isLoading" class="flex justify-center items-center">
+                <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-500"></div>
+                <span class="ml-2 text-blue-500">Cargando...</span>
+            </div>
+
+            <div v-else>
+                <h5 class="text-base-content/90 text-lg font-semibold mb-3">Terrenos registrados</h5>
+                <ul v-if="terrains.length > 0" class="list-inside list-disc">
+                    <li v-for="terrain in terrains" :key="terrain.id" class="mb-1">
+                        {{ terrain.place }} - {{ terrain.hr_total }} ha (Producción: {{ terrain.hr_prod }} ha)
+                    </li>
+                </ul>
+                <p v-else class="text-gray-500">No hay terrenos registrados.</p>
+            </div>
+            <hr class="w-full h-[1.5px] bg-black my-3">
             <form @submit.prevent="registerTerrain">
                 <div class="mb-5">
                     <label for="names" class="block mb-2 text-sm font-medium"
@@ -84,7 +129,9 @@ watch([area_total, area_production], ([newTotal, newProduction]) => {
                     </div>
 
                     <div class="mb-5">
-                        <label for="hr_prod" class="block mb-2 text-sm font-medium"
+                        <label
+                            for="hr_prod"
+                            class="block mb-2 text-sm font-medium"
                             >Hectareas de Produccion</label
                         >
                         <input
@@ -95,7 +142,10 @@ watch([area_total, area_production], ([newTotal, newProduction]) => {
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Hectareas de Produccion"
                         />
-                        <InputError :message="form.errors.hr_prod" class="mt-2" />
+                        <InputError
+                            :message="form.errors.hr_prod"
+                            class="mt-2"
+                        />
                     </div>
                 </div>
 

@@ -12,6 +12,10 @@ class Product extends Model
         "name"
     ];
 
+    public function procurements(){
+        return $this->hasMany(Procurement::class);
+    }
+
     public function scopeFilter($query, $search)
     {
         if ($search) {

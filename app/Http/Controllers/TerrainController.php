@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Terrain;
 use App\Http\Controllers\Controller;
+use App\Models\Productor;
 use Illuminate\Http\Request;
 
 class TerrainController extends Controller
@@ -47,7 +48,6 @@ class TerrainController extends Controller
             'place.max' => 'El campo lugar no debe tener más de 1000 caracteres.',
         ]);
 
-        // Crear el terreno
         Terrain::create([
             'productor_id' => $request->productor_id,
             'hr_total' => $request->hr_total,
@@ -87,5 +87,9 @@ class TerrainController extends Controller
     public function destroy(Terrain $terrain)
     {
         //
+    }
+
+    public function fetchOwner(Productor $productor){
+        return $productor->terrains;
     }
 }
