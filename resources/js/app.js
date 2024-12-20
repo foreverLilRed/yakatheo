@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
 import 'flyonui/flyonui.js';
+import 'flowbite';
 
 
 import { createApp, h } from 'vue';

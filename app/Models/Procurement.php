@@ -22,4 +22,5 @@ class Procurement extends Model
 
         return $query;
     }
+
 }

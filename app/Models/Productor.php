@@ -34,4 +34,5 @@ class Productor extends Model
 
         return $query;
     }
+
 }

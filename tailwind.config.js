@@ -10,7 +10,8 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
-        './node_modules/flyonui/dist/js/*.js'
+        './node_modules/flyonui/dist/js/*.js',
+        "./node_modules/flowbite/**/*.js"
     ],
 
     theme: {
@@ -22,6 +23,8 @@ export default {
     },
 
     plugins: [forms, typography,
+        require('flowbite/plugin'),
         require("flyonui"),
-        require("flyonui/plugin")],
+        require("flyonui/plugin"),
+    ],
 };

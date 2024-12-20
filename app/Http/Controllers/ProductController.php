@@ -104,7 +104,7 @@ class ProductController extends Controller
     
         $adjustedWeight = $weight - $penalize;
     
-        return response()->json(['adjustedWeight' => $request]);
+        return response()->json(['adjustedWeight' => $adjustedWeight]);
     }
     
 }
