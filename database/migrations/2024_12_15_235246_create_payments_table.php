@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('procurement_id')->constrained();
-            $table->decimal('amount');
+            $table->decimal('amount')->nullable();
             $table->timestamps();
         });
     }

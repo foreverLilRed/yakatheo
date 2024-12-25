@@ -85,5 +85,27 @@ class ProductorController extends Controller
         
     }
 
+    public function fetchQuery(Request $request){
+        $productors = Productor::query()
+            ->orderBy('names')
+            ->filter($request->search)
+            ->paginate(15)
+            ->withQueryString()
+            ->through(function ($productor) {
+                return [
+                    'id' => $productor->id,
+                    'nombres' => $productor->names,
+                    'apellidos' => $productor->surnames,
+                    'dni' => $productor->dni,
+                    'nacimiento' => $productor->birthday,
+                    'certificaciones' => $productor->seals->count(),
+                    'tierras' => $productor->terrains->count(),
+                    'balance' => $productor->balance()
+                ];
+            });
+
+        return response()->json($productors);
+    }
+
     
 }

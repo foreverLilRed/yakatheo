@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Procurement;
 use App\Http\Controllers\Controller;
+use App\Models\Productor;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use Inertia\Inertia;
 
@@ -47,10 +50,12 @@ class ProcurementController extends Controller
      */
     public function store(Request $request)
     {
+        Procurement::create($request->all());
         $request->validate([
             'product_id' => 'required|exists:products,id',
+            'productor_id' => 'required|exists:productors,id',
             'weight' => 'required|numeric',
-            'total_price' => 'required|numeric',
+            'unit_price' => 'required|numeric',
             'humidity' => 'required|numeric',
             'impurity' => 'required|numeric',
             'recovery' => 'nullable|numeric',
@@ -58,16 +63,13 @@ class ProcurementController extends Controller
             'cash' => 'nullable|numeric'
         ]);
 
-        Procurement::create([
-            'product_id' => $request->product_id,
-            'weight' => $request->weight,
-            'total_price' => $request->total_price,
-            'humidity' => $request->humidity,
-            'impurity' => $request->impurity,
-            'recovery' => $request->recovery,
-            'credit' => $request->credit,
-            'cash' => $request->cash
-        ]);
+        $procurement = Procurement::create($request->all());
+
+        if ($request->filled('credit')) {
+            $procurement->credit()->create([
+                'amount' => $request->input('credit'),
+            ]);
+        }
     }
 
     /**

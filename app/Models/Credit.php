@@ -9,4 +9,8 @@ class Credit extends Model
     protected $fillable = [
         'productor_id','procurement_id', 'amount','balance'
     ];
+
+    public function productor(){
+        return $this->belongsTo(Productor::class);
+    }
 }

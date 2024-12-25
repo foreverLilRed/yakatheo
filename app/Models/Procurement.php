@@ -23,4 +23,15 @@ class Procurement extends Model
         return $query;
     }
 
+    public function credit(){
+        return $this->hasOne(Credit::class);
+    }
+
+    public function payment(){
+        return $this->hasOne(Payment::class);
+    }
+
+    public function recovery(){
+        return $this->hasOne(Recovery::class);
+    }
 }

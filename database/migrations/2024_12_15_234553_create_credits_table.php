@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('credits', function (Blueprint $table) {
             $table->id();
             $table->foreignId('productor_id')->constrained();
-            $table->foreignId('procurement_id')->constrained();
-            $table->decimal('amount');
-            $table->decimal('balance');
+            $table->foreignId('procurement_id')->constrained()->nullable();
+            $table->decimal('amount')->nullable();
+            $table->decimal('balance')->nullable();
             $table->timestamps();
         });
     }

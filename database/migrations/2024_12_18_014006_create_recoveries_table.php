@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('procurement_id')->constrained();
             $table->decimal('amount');
-            $table->foreignId('credit_id')->constrained();
             $table->timestamps();
         });
     }
