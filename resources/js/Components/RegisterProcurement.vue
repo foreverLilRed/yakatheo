@@ -47,14 +47,15 @@ const form = useForm({
     impurity: 0,
     f1: 0,
     f2: 0,
-    payment: 0,
+    cash: 0,
     credit: 0,
     recovery: 0,
 });
 
 function registerProcurement() {
+    form.productor_id = selectedProductor.value.id;
     form.recovery = recovery.value;
-    form.post(route("product-store"), {
+    form.post(route("procurement-store"), {
         onSuccess: () => {
             form.reset();
             modalStatus.value = false;
@@ -215,10 +216,10 @@ watch(recovery, (newValue) => {
                 </p>
                 <div class="grid grid-cols-3 gap-x-4">
                     <div>
-                        <label for="payment" class="block mb-2 text-sm font-medium">
+                        <label for="cash" class="block mb-2 text-sm font-medium">
                             Contado
                         </label>
-                        <input v-model="form.payment" type="number" min="0.00" max="100.00" id="payment"
+                        <input v-model="form.cash" type="number" min="0.00" id="cash"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="" />
                     </div>
@@ -226,7 +227,7 @@ watch(recovery, (newValue) => {
                         <label for="credit" class="block mb-2 text-sm font-medium">
                             Agregar Credito
                         </label>
-                        <input v-model="form.credit" type="number" min="0.00" max="100.00" id="credit"
+                        <input v-model="form.credit" type="number" min="0.00" id="credit"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="" />
                     </div>
@@ -234,7 +235,7 @@ watch(recovery, (newValue) => {
                         <label for="recovery" class="block mb-2 text-sm font-medium">
                             Recupero
                         </label>
-                        <input v-model="recovery" type="number" min="0.00" max="100.00" id="recovery"
+                        <input v-model="recovery" type="number" min="0.00" id="recovery"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="" />
                     </div>

@@ -11,6 +11,10 @@ class Procurement extends Model
         'recovery', 'credit', 'cash' //campos opcionales
     ];
 
+    public function productor(){
+        return $this->belongsTo(Productor::class);
+    }
+
     public function product(){
         return $this->belongsTo(Product::class);
     }

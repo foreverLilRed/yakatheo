@@ -43,3 +43,4 @@ Route::get('/fetch/products', [ProductController::class, 'fetch'])->name('fetch-
 Route::post('/fetch/adjustement', [ProductController::class, 'adjustement'])->name('adjustement');
 
 Route::get('/procurements',[ProcurementController::class,'index'])->name('procurements');
+Route::post('/procurements/store',[ProcurementController::class,'store'])->name('procurement-store');

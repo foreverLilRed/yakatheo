@@ -50,16 +50,37 @@ class Productor extends Model
 
     public function balance()
     {
-        $credits = $this->credits()->sum('amount');
+        return $this->credits()->sum('balance');
+    }
 
-        $recoveryAmount = $this->procurements()
-            ->whereHas('recovery')
-            ->with('recovery')
-            ->get()
-            ->sum(function ($procurement) {
-                return $procurement->recovery->amount;
-            });
+    public function discount($amount)
+    {
+        if ($this->balance() < $amount) {
+            throw new \Exception("El monto a descontar excede el balance disponible del productor.");
+        }
 
-        return $credits - $recoveryAmount;
+        $credits = $this->credits()->orderBy('created_at')->get();
+
+        foreach ($credits as $credit) {
+            if ($amount <= 0) {
+                break;
+            }
+
+            $currentBalance = $credit->balance;
+
+            if ($currentBalance > 0) {
+                if ($amount >= $currentBalance) {
+                    $amount -= $currentBalance;
+                    $credit->balance = 0;
+                } else {
+                    $credit->balance -= $amount;
+                    $amount = 0;
+                }
+
+                $credit->save();
+            }
+        }
+
+        return true; 
     }
 }

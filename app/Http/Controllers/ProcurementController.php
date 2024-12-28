@@ -50,7 +50,6 @@ class ProcurementController extends Controller
      */
     public function store(Request $request)
     {
-        Procurement::create($request->all());
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'productor_id' => 'required|exists:productors,id',
@@ -65,10 +64,30 @@ class ProcurementController extends Controller
 
         $procurement = Procurement::create($request->all());
 
+        if ($request->filled('cash')) {
+            $procurement->payment()->create([
+                'amount' => $request->input('cash'),
+            ]);
+        }
+
         if ($request->filled('credit')) {
             $procurement->credit()->create([
+                'productor_id' => $request->input('productor_id'),
                 'amount' => $request->input('credit'),
+                'balance' => $request->input('credit'),
             ]);
+        }
+
+        if ($request->filled('recovery')) {
+            $recoveryAmount = $request->input('recovery');
+
+            try {
+                $procurement->productor->discount($recoveryAmount);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => 'No se puede realizar el descuento: ' . $e->getMessage(),
+                ], 400);
+            }
         }
     }
 
