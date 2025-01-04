@@ -6,6 +6,7 @@ import InputError from "./InputError.vue";
 import SaveButton from "./SaveButton.vue";
 import axios from "axios";
 import SealsSelector from "./SealsSelector.vue";
+import CommunitySelector from "./CommunitySelector.vue";
 
 const modalStatus = ref(false);
 const closeModal = () => {
@@ -18,6 +19,7 @@ const form = useForm({
     dni: "",
     birthday: "",
     seal: "",
+    community_id: "",
 });
 
 const seals = ref([]);
@@ -33,6 +35,11 @@ function registerProductor() {
 
 function handleSelectedSeals(selectedSeals) {
     form.seal = selectedSeals;
+}
+
+function handleCommunitySelect(community) {
+    form.community_id = community.id;
+    console.log(form.community_id);
 }
 </script>
 
@@ -73,20 +80,47 @@ function handleSelectedSeals(selectedSeals) {
                     <InputError :message="form.errors.surnames" class="mt-2" />
                 </div>
 
-                <div class="mb-5">
-                    <label for="dni" class="block mb-2 text-sm font-medium"
-                        >DNI</label
-                    >
-                    <input
-                        v-model="form.dni"
-                        type="text"
-                        id="dni"
-                        minlength="8"
-                        maxlength="8"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="DNI"
-                    />
-                    <InputError :message="form.errors.dni" class="mt-2" />
+                <div class="mb-5 grid grid-cols-1 md:grid-cols-3 items-center gap-x-3">
+                    <div class="mx-auto">
+                        <label
+                            for="community"
+                            class="block mb-2 text-sm font-medium"
+                            >Comunidad</label
+                        >
+                        <CommunitySelector @emitcommunity="handleCommunitySelect" id="community" />
+                    </div>
+                    <div>
+                        <label for="dni" class="block mb-2 text-sm font-medium"
+                            >DNI</label
+                        >
+                        <input
+                            v-model="form.dni"
+                            type="text"
+                            id="dni"
+                            minlength="8"
+                            maxlength="8"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="DNI"
+                        />
+                        <InputError :message="form.errors.dni" class="mt-2" />
+                    </div>
+                    <div>
+                        <label
+                            for="birthday"
+                            class="block mb-2 text-sm font-medium"
+                            >Fecha de Nacimiento</label
+                        >
+                        <input
+                            v-model="form.birthday"
+                            type="date"
+                            id="birthday"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                        <InputError
+                            :message="form.errors.birthday"
+                            class="mt-2"
+                        />
+                    </div>
                 </div>
 
                 <div class="mb-5">
@@ -96,19 +130,6 @@ function handleSelectedSeals(selectedSeals) {
                     <SealsSelector
                         @selectedSeals="handleSelectedSeals"
                     ></SealsSelector>
-                </div>
-
-                <div class="mb-5">
-                    <label for="birthday" class="block mb-2 text-sm font-medium"
-                        >Fecha de Nacimiento</label
-                    >
-                    <input
-                        v-model="form.birthday"
-                        type="date"
-                        id="birthday"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    />
-                    <InputError :message="form.errors.birthday" class="mt-2" />
                 </div>
 
                 <SaveButton :disabled="form.processing">Registrar</SaveButton>

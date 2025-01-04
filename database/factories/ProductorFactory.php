@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Community;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class ProductorFactory extends Factory
             'surnames' => $this->faker->lastName,        // Apellido ficticio
             'dni' => $this->faker->unique()->numerify('########'), // DNI único
             'birthday' => $this->faker->dateTimeBetween('-80 years', '-18 years'),
+            'community_id' => Community::pluck('id')->random(),
         ];
     }
 }

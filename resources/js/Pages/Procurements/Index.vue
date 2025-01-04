@@ -1,5 +1,6 @@
 <script>
 import Paginator from "@/Components/Paginator.vue";
+import ProcurementsTable from "@/Components/ProcurementsTable.vue";
 import RegisterProcurement from "@/Components/RegisterProcurement.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import throttle from "lodash/throttle";
@@ -8,7 +9,8 @@ export default {
     components: {
         AppLayout,
         Paginator,
-        RegisterProcurement
+        RegisterProcurement,
+        ProcurementsTable
     },
     props: {
         procurements: {
@@ -60,7 +62,7 @@ export default {
                 </label>
                 <RegisterProcurement></RegisterProcurement>
             </div>
-            {{ procurements.data }}
+            <ProcurementsTable :procurements="procurements.data" class="mt-6"></ProcurementsTable>
             <Paginator :links="procurements.links"></Paginator>
         </div>
     </AppLayout>

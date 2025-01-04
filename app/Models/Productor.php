@@ -12,7 +12,8 @@ class Productor extends Model
         "names",
         "surnames",
         "dni",
-        "birthday"
+        "birthday",
+        "community_id"
     ];
 
     public function seals()
@@ -51,6 +52,11 @@ class Productor extends Model
     public function balance()
     {
         return $this->credits()->sum('balance');
+    }
+
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
     }
 
     public function discount($amount)

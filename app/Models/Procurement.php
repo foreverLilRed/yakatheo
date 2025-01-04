@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Procurement extends Model
 {
     protected $fillable = [
-        'product_id', 'productor_id', 'weight', 'unit_price', 'humidity', 'impurity',
-        'recovery', 'credit', 'cash' //campos opcionales
+        'product_id', 'productor_id', 'weight', 'unit_price'
     ];
 
     public function productor(){
@@ -19,23 +18,19 @@ class Procurement extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function scopeFilter($query, $search){
+    public function total(){
+        return $this->weight * $this->unit_price;
+    }
+
+    public function scopeFilter($query, $search)
+    {
         if ($search) {
-            return $query->where('product_id', 'like', "%{$search}%");
+            return $query->whereHas('productor', function ($q) use ($search) {
+                $q->where('names', 'like', "%{$search}%");
+            });
         }
 
         return $query;
     }
 
-    public function credit(){
-        return $this->hasOne(Credit::class);
-    }
-
-    public function payment(){
-        return $this->hasOne(Payment::class);
-    }
-
-    public function recovery(){
-        return $this->hasOne(Recovery::class);
-    }
 }

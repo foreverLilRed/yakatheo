@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\ProcurementController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductorController;
@@ -34,6 +35,8 @@ Route::post('/productors/store',[ProductorController::class,'store'])->name('pro
 Route::get('/products',[ProductController::class,'index'])->name('products');
 Route::post('/products/store',[ProductController::class,'store'])->name('product-store');
 Route::get('/productors/fetch-query', [ProductorController::class, 'fetchQuery']);
+
+Route::get('/communities/fetch-query', [CommunityController::class, 'fetchQuery']);
 
 Route::post('/terrains/store',[TerrainController::class,'store'])->name('terrains-store');
 

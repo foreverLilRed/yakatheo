@@ -57,6 +57,7 @@ class ProductorController extends Controller
                 'dni' => 'required|digits:8', 
                 'birthday' => 'required|date',
                 'seal.*' => 'exists:seals,id', 
+                'community_id' => 'required|exists:communities,id'
             ],
             [
                 'names.required' => 'El campo nombres es obligatorio.',
@@ -77,6 +78,7 @@ class ProductorController extends Controller
             'surnames' => $request->surnames,
             'dni' => $request->dni,
             'birthday' => $request->birthday,
+            'community_id' => $request->community_id
         ]);
     
         if ($request->has('seal')) {

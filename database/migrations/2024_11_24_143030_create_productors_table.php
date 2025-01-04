@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('names');
             $table->string('surnames');
             $table->string('dni');
-            $table->dateTime('birthday');
+            $table->date('birthday');
+            $table->unsignedBigInteger('community_id');
+            $table->foreign('community_id')->references('id')->on('communities');
             $table->timestamps();
         });
     }

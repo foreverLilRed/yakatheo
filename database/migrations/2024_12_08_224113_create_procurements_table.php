@@ -17,11 +17,6 @@ return new class extends Migration
             $table->foreignId('productor_id')->constrained();
             $table->decimal('weight');
             $table->decimal("unit_price");
-            $table->decimal("humidity");
-            $table->decimal("impurity");
-            $table->decimal("recovery")->nullable();
-            $table->decimal("credit")->nullable();
-            $table->decimal("cash")->nullable();
             $table->timestamps();
         });
     }

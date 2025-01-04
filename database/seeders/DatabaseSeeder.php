@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Conservación Ambiental', 'description' => 'Prácticas sostenibles para el medio ambiente', 'created_at' => now(), 'updated_at' => now()],
         ]);
 
+        $this->call(CommunitySeeder::class);
         $this->call(ProductorSeeder::class);
     }
 }

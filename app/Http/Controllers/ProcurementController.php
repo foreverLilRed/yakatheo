@@ -20,19 +20,17 @@ class ProcurementController extends Controller
     {
         return Inertia::render('Procurements/Index', [
             'procurements' => Procurement::query()
+            ->with(['productor.community', 'product'])
                 ->orderBy('weight')
                 ->filter(RequestFacade::get('search'))
                 ->paginate(25)
                 ->withQueryString()
                 ->through(fn($procurement) => [
                     'id' => $procurement->id,
-                    'producto' => $procurement->product,
-                    'total_price' => $procurement->total_price,
-                    'humidity' => $procurement->humidity,
-                    'impurity' => $procurement->impurity,
-                    'recovery' => $procurement->recovery,
-                    'credit' => $procurement->credit,
-                    'cash' => $procurement->cash
+                    'weight' => $procurement->weight,
+                    'unit_price' => $procurement->unit_price,
+                    'product' => $procurement->product,
+                    'productor' => $procurement->productor,
                 ])
         ]);
     }
@@ -54,41 +52,10 @@ class ProcurementController extends Controller
             'product_id' => 'required|exists:products,id',
             'productor_id' => 'required|exists:productors,id',
             'weight' => 'required|numeric',
-            'unit_price' => 'required|numeric',
-            'humidity' => 'required|numeric',
-            'impurity' => 'required|numeric',
-            'recovery' => 'nullable|numeric',
-            'credit' => 'nullable|numeric',
-            'cash' => 'nullable|numeric'
+            'unit_price' => 'required|numeric'
         ]);
 
-        $procurement = Procurement::create($request->all());
-
-        if ($request->filled('cash')) {
-            $procurement->payment()->create([
-                'amount' => $request->input('cash'),
-            ]);
-        }
-
-        if ($request->filled('credit')) {
-            $procurement->credit()->create([
-                'productor_id' => $request->input('productor_id'),
-                'amount' => $request->input('credit'),
-                'balance' => $request->input('credit'),
-            ]);
-        }
-
-        if ($request->filled('recovery')) {
-            $recoveryAmount = $request->input('recovery');
-
-            try {
-                $procurement->productor->discount($recoveryAmount);
-            } catch (\Exception $e) {
-                return response()->json([
-                    'message' => 'No se puede realizar el descuento: ' . $e->getMessage(),
-                ], 400);
-            }
-        }
+        Procurement::create($request->all());
     }
 
     /**
