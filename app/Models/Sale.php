@@ -14,6 +14,17 @@ class Sale extends Model
         "document_number"
     ];
 
+    public function scopeFilter($query, $search)
+    {
+        if ($search) {
+            return $query->whereHas('buyer', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            });
+        }
+
+        return $query;
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);
@@ -22,5 +33,21 @@ class Sale extends Model
     public function buyer()
     {
         return $this->belongsTo(Buyer::class);
+    }
+
+    public function total()
+    {
+        return $this->weight * $this->unit_price;
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($sale) {
+            $product = Product::find($sale->product_id);
+
+            if ($sale->weight > $product->totalStock()) {
+                return false; 
+            }
+        });
     }
 }

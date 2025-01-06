@@ -27,7 +27,7 @@
         <div
             id="dropdownSearch"
             v-show="isDropdownVisible"
-            class="absolute z-10 bg-white rounded-lg shadow w-60 dark:bg-gray-700"
+            class="relative z-10 overflow-visible bg-white rounded-lg shadow w-60 dark:bg-gray-700"
         >
             <div class="p-3">
                 <label for="input-group-search" class="sr-only">Search</label>
@@ -60,7 +60,9 @@
                     </div>
                 </li>
             </ul>
+            <!--
             <PaginatorEscape class="m-2" :links="productors.links" @page-change="searchProductors"></PaginatorEscape>
+            -->
         </div>
     </div>
 </template>

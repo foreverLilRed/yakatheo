@@ -24,4 +24,16 @@ class Product extends Model
 
         return $query;
     }
+
+    public function sales(){
+        return $this->hasMany(Sale::class);
+    }
+
+    public function stocks(){
+        return $this->hasMany(Stock::class);
+    }
+
+    public function totalStock(){
+        return $this->stocks->where('status', 1)->sum('quantity') - $this->stocks->where('status', 0)->sum('quantity');
+    }
 }

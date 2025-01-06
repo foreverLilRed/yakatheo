@@ -29,7 +29,11 @@ class BuyerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        Buyer::create($request->all());
     }
 
     /**
@@ -62,5 +66,27 @@ class BuyerController extends Controller
     public function destroy(Buyer $buyer)
     {
         //
+    }
+
+    public function fetchQuery(Request $request){
+        $buyers = Buyer::query()
+            ->orderBy('name')
+            ->filter($request->search)
+            ->paginate(15)
+            ->withQueryString()
+            ->through(function ($productor) {
+                return [
+                    'id' => $productor->id,
+                    'nombres' => $productor->name,
+                ];
+            });
+
+        return response()->json($buyers);
+    }
+
+    public function fetch()
+    {
+        $buyers = Buyer::all();
+        return response()->json($buyers);
     }
 }

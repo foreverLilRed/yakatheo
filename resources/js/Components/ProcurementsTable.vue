@@ -40,6 +40,9 @@ const procurementsWithTotal = computed(() =>
                         <td>{{procurement.weight}}</td>
                         <td>{{procurement.unit_price}}</td>
                         <td>{{procurement.total}}</td>
+                        <td>
+                            <a :href="`/documents/procurement/${procurement.id}`" class="text-sm text-gray-600 font-thin hover:underline">Ver documento</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

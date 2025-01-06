@@ -26,7 +26,8 @@ class ProductController extends Controller
                 ->withQueryString()
                 ->through(fn($product) => [
                     'id' => $product->id,
-                    'nombres' => $product->name
+                    'nombres' => $product->name,
+                    'stock' => $product->totalStock(),
                 ])
         ]);
     }
@@ -89,22 +90,25 @@ class ProductController extends Controller
         //
     }
 
-    public function fetch(){
-        return response()->json(Product::all());
+    public function fetchQuery(Request $request){
+        $products = Product::query()
+            ->orderBy('name')
+            ->filter($request->search)
+            ->paginate(2)
+            ->withQueryString()
+            ->through(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'nombres' => $product->name,
+                    'stock' => $product->totalStock(),
+                ];
+            });
+
+        return response()->json($products);
     }
 
-    public function adjustement(Request $request) {
-        $weight = $request->weight;
-        $i = $request->i;
-        $penalize = 0;
-    
-        if ($i >= 8) {
-            $penalize = floor($weight / 50);
-        }
-    
-        $adjustedWeight = $weight - $penalize;
-    
-        return response()->json(['adjustedWeight' => $adjustedWeight]);
+    public function fetch(){
+        return response()->json(Product::all());
     }
     
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProcurementEntered;
 use App\Models\Procurement;
 use App\Http\Controllers\Controller;
 use App\Models\Productor;
@@ -55,7 +56,9 @@ class ProcurementController extends Controller
             'unit_price' => 'required|numeric'
         ]);
 
-        Procurement::create($request->all());
+        $procurement = Procurement::create($request->all());
+
+        event(new ProcurementEntered($procurement));
     }
 
     /**

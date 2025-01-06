@@ -47,7 +47,6 @@ onMounted(() => initFlowbite())
                 </button>
             </div>
 
-            <!-- Navigation Links -->
             <nav class="mt-4 flex-grow">
                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                     Dashboard
@@ -63,6 +62,9 @@ onMounted(() => initFlowbite())
                 </NavLink>
                 <NavLink :href="route('procurements')" :active="route().current('procurements')">
                     Gestionar Acopios
+                </NavLink>
+                <NavLink :href="route('sales')" :active="route().current('sales')">
+                    Gestionar Ventas
                 </NavLink>
                 <!-- Add more navigation links as needed -->
             </nav>

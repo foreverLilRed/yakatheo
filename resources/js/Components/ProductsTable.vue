@@ -11,11 +11,13 @@ const data = defineProps({
       <thead>
         <tr>
           <th>Nombre</th>
+          <th>Stock</th>
         </tr>
       </thead>
       <tbody>
         <tr class="hover:bg-gray-200" v-for="product in data.products" :key="product.id">
           <td>{{ product.nombres }}</td>
+          <td>{{ product.stock }} Kg</td>
         </tr>
       </tbody>
     </table>

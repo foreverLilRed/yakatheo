@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ProcurementController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductorController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SealsController;
 use App\Http\Controllers\TerrainController;
 use Illuminate\Foundation\Application;
@@ -31,10 +34,11 @@ Route::middleware([
 
 Route::get('/productors',[ProductorController::class,'index'])->name('productors');
 Route::post('/productors/store',[ProductorController::class,'store'])->name('productors-store');
+Route::get('/productors/fetch-query', [ProductorController::class, 'fetchQuery']);
 
 Route::get('/products',[ProductController::class,'index'])->name('products');
 Route::post('/products/store',[ProductController::class,'store'])->name('product-store');
-Route::get('/productors/fetch-query', [ProductorController::class, 'fetchQuery']);
+Route::get('/products/fetch-query', [ProductController::class, 'fetchQuery']);
 
 Route::get('/communities/fetch-query', [CommunityController::class, 'fetchQuery']);
 
@@ -47,3 +51,11 @@ Route::post('/fetch/adjustement', [ProductController::class, 'adjustement'])->na
 
 Route::get('/procurements',[ProcurementController::class,'index'])->name('procurements');
 Route::post('/procurements/store',[ProcurementController::class,'store'])->name('procurement-store');
+
+Route::get('/documents/procurement/{procurement}', [DocumentController::class, 'procurement'])->name('document-procurement');
+
+Route::post('/buyers/store',[BuyerController::class,'store'])->name('buyer-store');
+Route::get('/buyers/fetch-query', [BuyerController::class, 'fetchQuery']);
+
+Route::get('/sales',[SalesController::class,'index'])->name('sales');
+Route::post('/sales/store',[SalesController::class,'store'])->name('sales-store');
