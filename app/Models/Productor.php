@@ -21,11 +21,6 @@ class Productor extends Model
         return $this->belongsToMany(Seal::class, 'productor_seal');
     }
 
-    public function credits()
-    {
-        return $this->hasMany(Credit::class);
-    }
-
 
     public function terrains()
     {
@@ -48,45 +43,10 @@ class Productor extends Model
     {
         return $this->hasMany(Procurement::class);
     }
-
-    public function balance()
-    {
-        return $this->credits()->sum('balance');
-    }
-
+    
     public function community()
     {
         return $this->belongsTo(Community::class);
     }
 
-    public function discount($amount)
-    {
-        if ($this->balance() < $amount) {
-            throw new \Exception("El monto a descontar excede el balance disponible del productor.");
-        }
-
-        $credits = $this->credits()->orderBy('created_at')->get();
-
-        foreach ($credits as $credit) {
-            if ($amount <= 0) {
-                break;
-            }
-
-            $currentBalance = $credit->balance;
-
-            if ($currentBalance > 0) {
-                if ($amount >= $currentBalance) {
-                    $amount -= $currentBalance;
-                    $credit->balance = 0;
-                } else {
-                    $credit->balance -= $amount;
-                    $amount = 0;
-                }
-
-                $credit->save();
-            }
-        }
-
-        return true; 
-    }
 }

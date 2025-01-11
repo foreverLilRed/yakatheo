@@ -44,10 +44,12 @@ class Sale extends Model
     {
         static::creating(function ($sale) {
             $product = Product::find($sale->product_id);
-
+        
             if ($sale->weight > $product->totalStock()) {
-                return false; 
+                return false;
             }
+            return true;
         });
+        
     }
 }

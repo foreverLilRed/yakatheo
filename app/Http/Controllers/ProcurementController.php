@@ -52,9 +52,20 @@ class ProcurementController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'productor_id' => 'required|exists:productors,id',
-            'weight' => 'required|numeric',
-            'unit_price' => 'required|numeric'
-        ]);
+            'weight' => 'required|numeric|min:0.01',
+            'unit_price' => 'required|numeric|min:0.01',
+        ], [
+            'product_id.required' => 'El campo producto es obligatorio.',
+            'product_id.exists' => 'El producto con el ID especificado no existe.',
+            'productor_id.required' => 'El campo productor es obligatorio.',
+            'productor_id.exists' => 'El productor con el ID especificado no existe.',
+            'weight.required' => 'El campo peso es obligatorio.',
+            'weight.numeric' => 'El campo peso debe ser un número decimal o entero.',
+            'weight.min' => 'El campo peso debe ser mayor a 0.',
+            'unit_price.required' => 'El campo precio unitario es obligatorio.',
+            'unit_price.numeric' => 'El campo precio unitario debe ser un número decimal o entero.',
+            'unit_price.min' => 'El campo precio unitario debe ser mayor a 0.'
+        ]);        
 
         $procurement = Procurement::create($request->all());
 

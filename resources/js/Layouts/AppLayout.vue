@@ -66,6 +66,9 @@ onMounted(() => initFlowbite())
                 <NavLink :href="route('sales')" :active="route().current('sales')">
                     Gestionar Ventas
                 </NavLink>
+                <NavLink :href="route('credits')" :active="route().current('credits')">
+                    Gestionar Creditos
+                </NavLink>
                 <!-- Add more navigation links as needed -->
             </nav>
         </aside>

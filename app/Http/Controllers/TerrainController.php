@@ -31,10 +31,16 @@ class TerrainController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'productor_id' => 'required|exists:productors,id', // Verifica que el ID exista en la tabla productors
-            'hr_total' => 'required|numeric', // Verifica que sea un número (decimal o entero)
-            'hr_prod' => 'required|numeric|lte:hr_total', // Verifica que sea un número y que hr_prod sea <= hr_total
-            'place' => 'required|string|max:1000', // Verifica que sea una cadena de texto larga
+            'productor_id' => 'required|exists:productors,id', 
+            'hr_total' => 'required|numeric',
+            'hr_prod' => 'required|numeric|lte:hr_total', 
+            'place' => 'required|string|max:1000', 
+            'latitud' => 'required|string',
+            'longitud' => 'required|string',
+            'altitud' => 'required|string',
+            'zona' => 'required|string',
+            'este' => 'required|string',
+            'norte' => 'required|string'
         ], [
             'productor_id.required' => 'El campo productor es obligatorio.',
             'productor_id.exists' => 'El productor con el ID especificado no existe.',
@@ -46,13 +52,25 @@ class TerrainController extends Controller
             'place.required' => 'El campo lugar es obligatorio.',
             'place.string' => 'El campo lugar debe ser una cadena de texto.',
             'place.max' => 'El campo lugar no debe tener más de 1000 caracteres.',
+            'latitud.required' => 'El campo latitud es obligatorio.',
+            'longitud.required' => 'El campo longitud es obligatorio.',
+            'altitud.required' => 'El campo altitud es obligatorio.',
+            'zona.required' => 'El campo zona es obligatorio.',
+            'este.required' => 'El campo este es obligatorio.',
+            'norte.required' => 'El campo norte es obligatorio.'
         ]);
 
         Terrain::create([
             'productor_id' => $request->productor_id,
             'hr_total' => $request->hr_total,
             'hr_prod' => $request->hr_prod,
-            'place' => $request->place
+            'place' => $request->place,
+            'latitud' => $request->latitud,
+            'longitud' => $request->longitud,
+            'altitud' => $request->altitud,
+            'zona' => $request->zona,
+            'este' => $request->este,
+            'norte' => $request->norte
         ]);
     }
 

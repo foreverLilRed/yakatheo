@@ -8,7 +8,7 @@ class Terrain extends Model
 {
     protected $table = 'terrains';
     protected $fillable = [
-        'productor_id','place','hr_total','hr_prod'
+        'productor_id','place','hr_total','hr_prod', 'latitud','longitud','altitud','zona','este','norte'
     ];
 
     public function productor(){

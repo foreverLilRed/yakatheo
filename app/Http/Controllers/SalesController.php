@@ -51,9 +51,9 @@ class SalesController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'buyer_id' => 'required|exists:buyers,id',
-            'weight' => 'required|numeric',
-            'unit_price' => 'required|numeric',
-            'document_number' => 'required|string|max:255',
+            'weight' => 'required|numeric|min:0.01',
+            'unit_price' => 'required|numeric|min:0.01',
+            'document_number' => 'required',
         ],[
             'product_id.required' => 'El producto es requerido',
             'product_id.exists' => 'El producto no existe',
@@ -62,14 +62,13 @@ class SalesController extends Controller
             'weight.required' => 'El peso es requerido',
             'unit_price.required' => 'El precio unitario es requerido',
             'document_number.required' => 'El número de documento es requerido',
+            'document_number.string' => 'El número de documento debe ser una cadena de texto',
+            'weight.min' => 'El peso debe ser un numero',
+            'unit_price.min' => 'El precio unitario debe ser un numero',
         ]); 
 
         $sale = Sale::create($request->all());
-
-        if($sale){
-            return back();
-        }
-
+        
         event(new SaleCreated($sale));
     }
 

@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('credits', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('productor_id')->constrained();
-            $table->foreignId('procurement_id')->constrained()->nullable();
-            $table->decimal('amount')->nullable();
-            $table->decimal('balance')->nullable();
+            $table->foreignId('product_id')->constrained();
+            $table->foreignId('buyer_id')->constrained();
+            $table->decimal('weight');
+            $table->decimal("unit_price");
+            $table->string("document_number");
+            $table->string('document_path')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('credits');
+        Schema::dropIfExists('sales');
     }
 };

@@ -18,6 +18,12 @@ return new class extends Migration
             $table->string('place');
             $table->decimal('hr_total');
             $table->decimal('hr_prod');
+            $table->decimal('latitud')->nullable();
+            $table->decimal('longitud')->nullable();
+            $table->decimal('altitud')->nullable();
+            $table->decimal('zona')->nullable();
+            $table->decimal('este')->nullable();
+            $table->decimal('norte')->nullable();
             $table->timestamps();
         });
     }

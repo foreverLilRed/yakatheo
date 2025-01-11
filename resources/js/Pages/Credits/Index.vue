@@ -5,18 +5,21 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import throttle from "lodash/throttle";
 import Register from "../Auth/Register.vue";
 import SalesTable from "@/Components/SalesTable.vue";
+import RegisterInstitution from "@/Components/RegisterInstitution.vue";
+import RegisterCredit from "@/Components/RegisterCredit.vue";
+import CreditsTable from "@/Components/CreditsTable.vue";
 import Paginator from "@/Components/Paginator.vue";
 
 export default {
     components: {
         AppLayout,
-        RegisterBuyer,
-        RegisterSale,
-        SalesTable,
+        RegisterInstitution,
+        RegisterCredit,
+        CreditsTable,
         Paginator
     },
     props: {
-        sales: {
+        credits: {
             type: Object, 
             required: true,
         },
@@ -31,7 +34,7 @@ export default {
     watch: {
         "form.search": throttle(function (newSearch) {
             this.$inertia.get(
-                "/sales",
+                "/credits",
                 { search: newSearch },
                 { preserveState: true }
             );
@@ -41,10 +44,10 @@ export default {
 </script>
 
 <template>
-    <AppLayout title="Ventas">
+    <AppLayout title="Creditos">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Ventas
+                Creditos
             </h2>
         </template>
 
@@ -63,11 +66,11 @@ export default {
                         placeholder="Buscar por proveedor, producto..."
                     />
                 </label>
-                <RegisterSale></RegisterSale>
-                <RegisterBuyer></RegisterBuyer>
+                <RegisterCredit></RegisterCredit>
+                <RegisterInstitution></RegisterInstitution>
             </div>
-            <SalesTable :sales="sales.data" class="mt-6"></SalesTable>
-            <Paginator :links="sales.links"></Paginator>
+            <CreditsTable :credits="credits.data" class="mt-6"></CreditsTable>
+            <Paginator :links="credits.links"></Paginator>
         </div>
     </AppLayout>
 </template>

@@ -2,6 +2,7 @@
 import Paginator from "@/Components/Paginator.vue";
 import ProcurementsTable from "@/Components/ProcurementsTable.vue";
 import RegisterProcurement from "@/Components/RegisterProcurement.vue";
+import TestChart from "@/Components/TestChart.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import throttle from "lodash/throttle";
 
@@ -10,7 +11,8 @@ export default {
         AppLayout,
         Paginator,
         RegisterProcurement,
-        ProcurementsTable
+        ProcurementsTable,
+        TestChart
     },
     props: {
         procurements: {

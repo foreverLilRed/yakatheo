@@ -20,6 +20,12 @@ const form = useForm({
     place: "",
     hr_total: "",
     hr_prod: "",
+    latitud: '',
+    longitud: '',
+    altitud: '',
+    zona: '',
+    este: '',
+    norte: ''
 });
 
 const terrains = ref({})
@@ -30,17 +36,17 @@ const area_production = ref("");
 
 watch(modalStatus, (newStatus) => {
     if (newStatus) {
-        isLoading.value = true; // Activar spinner
+        isLoading.value = true;
         axios
             .get(`/fetch/terrains/${data.productor.id}`)
             .then((response) => {
-                terrains.value = response.data; // Asignar datos al ref
+                terrains.value = response.data;
             })
             .catch((error) => {
                 console.error("Error al obtener los datos:", error);
             })
             .finally(() => {
-                isLoading.value = false; // Desactivar spinner
+                isLoading.value = false;
             });
     }
 });
@@ -71,9 +77,7 @@ watch([area_total, area_production], ([newTotal, newProduction]) => {
         Registrar tierra
     </button>
     <DialogModal :show="modalStatus" @close="closeModal">
-        <template #title
-            >Registrar Tierra para {{ data.productor.nombres }}</template
-        >
+        <template #title>Registrar Tierra para {{ data.productor.nombres }}</template>
 
         <template #content>
             <div v-if="isLoading" class="flex justify-center items-center">
@@ -93,59 +97,69 @@ watch([area_total, area_production], ([newTotal, newProduction]) => {
             <hr class="w-full h-[1.5px] bg-black my-3">
             <form @submit.prevent="registerTerrain">
                 <div class="mb-5">
-                    <label for="names" class="block mb-2 text-sm font-medium"
-                        >Ubicacion</label
-                    >
-                    <input
-                        v-model="form.place"
-                        type="text"
-                        id="names"
-                        required
+                    <label for="names" class="block mb-2 text-sm font-medium">Ubicacion</label>
+                    <input v-model="form.place" type="text" id="names" required
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Lugar"
-                    />
+                        placeholder="Lugar" />
                     <InputError :message="form.errors.place" class="mt-2" />
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div class="mb-5">
-                        <label
-                            for="hr_total"
-                            class="block mb-2 text-sm font-medium"
-                            >Hectareas Totales</label
-                        >
-                        <input
-                            v-model="area_total"
-                            type="text"
-                            id="hr_total"
-                            required
+                        <label for="hr_total" class="block mb-2 text-sm font-medium">Hectareas Totales</label>
+                        <input v-model="area_total" type="text" id="hr_total" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Hectareas Totales"
-                        />
-                        <InputError
-                            :message="form.errors.hr_total"
-                            class="mt-2"
-                        />
+                            placeholder="Hectareas Totales" />
+                        <InputError :message="form.errors.hr_total" class="mt-2" />
                     </div>
-
                     <div class="mb-5">
-                        <label
-                            for="hr_prod"
-                            class="block mb-2 text-sm font-medium"
-                            >Hectareas de Produccion</label
-                        >
-                        <input
-                            v-model="area_production"
-                            type="text"
-                            id="hr_prod"
-                            required
+                        <label for="hr_prod" class="block mb-2 text-sm font-medium">Hectareas de Produccion</label>
+                        <input v-model="area_production" type="text" id="hr_prod" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Hectareas de Produccion"
-                        />
-                        <InputError
-                            :message="form.errors.hr_prod"
-                            class="mt-2"
-                        />
+                            placeholder="Hectareas de Produccion" />
+                        <InputError :message="form.errors.hr_prod" class="mt-2" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="latitud" class="block mb-2 text-sm font-medium">Latitud</label>
+                        <input v-model="form.latitud" type="text" id="latitud" required
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Latitud" />
+                        <InputError :message="form.errors.latitud" class="mt-2" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="longitud" class="block mb-2 text-sm font-medium">Longitud</label>
+                        <input v-model="form.longitud" type="text" id="longitud" required
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Latitud" />
+                        <InputError :message="form.errors.longitud" class="mt-2" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="altitud" class="block mb-2 text-sm font-medium">Altitud</label>
+                        <input v-model="form.altitud" type="text" id="altitud" required
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Latitud" />
+                        <InputError :message="form.errors.altitud" class="mt-2" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="zona" class="block mb-2 text-sm font-medium">Zona</label>
+                        <input v-model="form.zona" type="text" id="zona" required
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Latitud" />
+                        <InputError :message="form.errors.zona" class="mt-2" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="este" class="block mb-2 text-sm font-medium">Este</label>
+                        <input v-model="form.este" type="text" id="este" required
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Latitud" />
+                        <InputError :message="form.errors.este" class="mt-2" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="norte" class="block mb-2 text-sm font-medium">Norte</label>
+                        <input v-model="form.norte" type="text" id="norte" required
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Latitud" />
+                        <InputError :message="form.errors.norte" class="mt-2" />
                     </div>
                 </div>
 
