@@ -36,7 +36,8 @@ class CreditController extends Controller
                         Credit::STATUS_OVERDUE => 'Atrasado',
                     },
                     'moneda' => $credit->currency,
-                    'proposito' => $credit->purpose
+                    'proposito' => $credit->purpose,
+                    'pagos' => $credit->payments
                 ])
         ]);
     }

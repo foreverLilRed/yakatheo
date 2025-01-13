@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Credit extends Model
@@ -28,6 +29,12 @@ class Credit extends Model
         return $this->belongsTo(Institution::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+
     public function scopeFilter($query, $search){
         if ($search) {
             return $query->whereHas('institution', function ($q) use ($search) {
@@ -43,6 +50,21 @@ class Credit extends Model
         static::creating(function ($credit) {
             $credit->remaining_balance = $credit->total_amount;
         });
+    }
+
+    public function getLoanDateAttribute($value)
+    {
+        return $this->formatDate($value);
+    }
+
+    public function getDueDateAttribute($value)
+    {
+        return $this->formatDate($value);
+    }
+
+    private function formatDate($value)
+    {
+        return Carbon::parse($value)->translatedFormat('j \d\e F \d\e\l Y');
     }
 
 }

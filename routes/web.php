@@ -5,6 +5,7 @@ use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CreditController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProcurementController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductorController;
@@ -64,6 +65,9 @@ Route::get('/institutions/fetch-query',[InstitutionController::class,'fetchQuery
 
 Route::get('/sales',[SalesController::class,'index'])->name('sales');
 Route::post('/sales/store',[SalesController::class,'store'])->name('sales-store');
+Route::post('/sales/{sale}/document/upload',[SalesController::class,'upload'])->name('sales-document-store');
 
 Route::get('/credits',[CreditController::class,'index'])->name('credits');
 Route::post('/credits/store',[CreditController::class,'store'])->name('credits-store');
+
+Route::post('/payments/store',[PaymentsController::class,'store'])->name('payments-store');

@@ -90,12 +90,18 @@ const handleProductorSelect = (productor) => {
         <template #content>
             <form @submit.prevent="registerProcurement" >
                 <div class="mb-5">
-                    <div class="grid grid-cols-2">
+                    <div class="grid grid-cols-2 gap-4">
                     <InputSelect :items="products" @item-selected="handleProductChange"
                         placeholder="Seleccionar un producto" label="Producto"></InputSelect>
-                        <div class="mx-auto my-auto">
-                            <ProductorSelector @emit-productor="handleProductorSelect"/>
-                        </div>
+                    <div>
+                        <label
+                            for="productor"
+                            class="block mb-2 text-sm font-medium"
+                            >Productor</label
+                        >
+                        <ProductorSelector id="productor" @emit-productor="handleProductorSelect"/>
+                    </div>
+
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>

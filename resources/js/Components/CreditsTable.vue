@@ -1,5 +1,7 @@
 <script setup>
 import { computed } from 'vue';
+import PaymentsModal from './PaymentsModal.vue';
+import RegisterPayment from './RegisterPayment.vue';
 
 
 const props = defineProps({
@@ -37,9 +39,9 @@ const props = defineProps({
                         <td class="text-nowrap">{{ credit.fecha_prestamo }}</td>
                         <td class="text-nowrap">{{ credit.fecha_vencimiento }}</td>
                         <td class="text-nowrap">{{ credit.estado }}</td>
-                        <td>
-                            <a :href="`/documents/procurement/${credit.id}`"
-                                class="text-sm text-gray-600 font-thin hover:underline">Ver documento</a>
+                        <td class="flex items-center gap-x-2">
+                            <RegisterPayment :credit="credit" :key="credit.id"/>
+                            <PaymentsModal :credit="credit" :key="credit.id"/>
                         </td>
                     </tr>
                 </tbody>

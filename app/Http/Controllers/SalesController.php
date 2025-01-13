@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Request as RequestFacade;
+use Illuminate\Support\Facades\Storage;
 
 class SalesController extends Controller
 {
@@ -30,7 +31,8 @@ class SalesController extends Controller
                     "weight" => $sale->weight,
                     "unit_price" => $sale->unit_price,
                     "document_number" => $sale->document_number,
-                    "total" => $sale->total()
+                    "total" => $sale->total(),
+                    "documento" => $sale->document_path
             ])
         ]);
     }
@@ -103,4 +105,21 @@ class SalesController extends Controller
     {
         //
     }
+
+    public function upload(Request $request, Sale $sale)
+    {
+        $request->validate([
+            'document' => 'required|file|mimes:pdf|max:1024', 
+        ]);
+    
+        if ($sale->document_path && Storage::disk('public')->exists($sale->document_path)) {
+            Storage::disk('public')->delete($sale->document_path);
+        }
+    
+        $fileName = "{$sale->id}." . $request->file('document')->getClientOriginalExtension();
+    
+        $request->file('document')->storeAs('sales', $fileName, 'public');
+    
+    }
+
 }

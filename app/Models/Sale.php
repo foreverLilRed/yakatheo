@@ -11,7 +11,8 @@ class Sale extends Model
         "buyer_id",
         "weight",
         "unit_price",
-        "document_number"
+        "document_number",
+        "document_path"
     ];
 
     public function scopeFilter($query, $search)

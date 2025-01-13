@@ -1,4 +1,5 @@
 <script setup>
+import TestChart from '@/Components/TestChart.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 </script>
 
@@ -11,7 +12,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
         </template>
 
         <div class="px-12 py-12">
-            e
+            <TestChart></TestChart>
         </div>
     </AppLayout>
 </template>

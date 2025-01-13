@@ -81,7 +81,7 @@ function handleCommunitySelect(community) {
                 </div>
 
                 <div class="mb-5 grid grid-cols-1 md:grid-cols-3 items-center gap-x-3">
-                    <div class="mx-auto">
+                    <div>
                         <label
                             for="community"
                             class="block mb-2 text-sm font-medium"

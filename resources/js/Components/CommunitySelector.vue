@@ -2,7 +2,7 @@
     <div ref="dropdownContainer" class="relative">
         <button
             data-dropdown-placement="bottom"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="btn btn-block btn-soft btn-accent"
             type="button"
             @click="toggleDropdown"
         >
@@ -38,7 +38,7 @@
                         v-model="search"
                         @input="searchcommunitys()"
                         class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Buscar community"
+                        placeholder="Buscar Comunidad"
                     />
                 </div>
             </div>
@@ -60,9 +60,6 @@
                     </div>
                 </li>
             </ul>
-            <!--
-            <PaginatorEscape class="m-2" :links="communitys.links" @page-change="searchcommunitys"></PaginatorEscape>
-            -->
         </div>
     </div>
 </template>

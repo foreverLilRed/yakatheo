@@ -27,6 +27,18 @@ const form = useForm({
     purpose: '',
 });
 
+const validateField = (field, event) => {
+    let value = event.target.value;
+
+    const regex = /^\d*(\.\d{0,2})?$/;
+
+    if (!regex.test(value)) {
+        value = value.slice(0, -1);
+    }
+
+    form[field] = value;
+};
+
 function registerInstitution() {
     form.post(route("credits-store"), {
         onSuccess: () => {
@@ -55,10 +67,10 @@ watch(
 
 <template>
     <button @click="modalStatus = true" class="btn btn-primary">
-        Registrar Institucion
+        Registrar Credito
     </button>
     <DialogModal :show="modalStatus" @close="closeModal" maxWidth="3xl">
-        <template #title>Registrar Institucion</template>
+        <template #title>Registrar Credito</template>
 
         <template #content>
             <form @submit.prevent="registerInstitution">
@@ -78,7 +90,9 @@ watch(
                         >
                         <input
                             v-model="form.credit"
+                            @input="validateField('credit', $event)"
                             type="number"
+                            step="0.01"
                             id="credit"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Credito"
@@ -93,6 +107,7 @@ watch(
                         >
                         <input
                             v-model="form.interest_rate"
+                            @input="validateField('interest_rate', $event)"
                             type="number"
                             id="interest_rate"
                             step="0.01"
@@ -112,7 +127,9 @@ watch(
                         >
                         <input
                             v-model="form.total_amount"
+                            @input="validateField('total_amount', $event)"
                             type="number"
+                            step="0.001"
                             id="total_amount"
                             placeholder="Interes"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

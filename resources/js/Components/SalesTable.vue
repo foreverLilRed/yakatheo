@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import UploadDocumentSale from './UploadDocumentSale.vue';
 
 
 const props = defineProps({
@@ -42,8 +43,10 @@ const totalWeight = computed(() => {
                         <td>{{ sale.unit_price }}</td>
                         <td>{{ sale.total }}</td>
                         <td>
-                            <a :href="`/documents/procurement/${sale.id}`"
-                                class="text-sm text-gray-600 font-thin hover:underline">Ver documento</a>
+                            <div class="flex items-center gap-x-2">
+                                <a v-if="sale.documento" :href="`/storage/${sale.documento}`" target="_blank" class="btn btn-accent btn-xs">Ver Documento</a>
+                                <UploadDocumentSale :sale="sale" :key="sale.id"/>
+                            </div>
                         </td>
                     </tr>
                     <tr>
