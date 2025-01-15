@@ -3,6 +3,7 @@
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CreditController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\PaymentsController;
@@ -30,9 +31,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 });
 
 Route::get('/productors',[ProductorController::class,'index'])->name('productors');

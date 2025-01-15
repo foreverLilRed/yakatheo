@@ -1,6 +1,13 @@
 <script setup>
+import CreditsChart from '@/Components/CreditsChart.vue';
 import TestChart from '@/Components/TestChart.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
+
+const data = defineProps({
+    segmentacion: Array,
+    sales: Array,
+    credits: Array,
+});
 </script>
 
 <template>
@@ -12,7 +19,11 @@ import AppLayout from '@/Layouts/AppLayout.vue';
         </template>
 
         <div class="px-12 py-12">
-            <TestChart></TestChart>
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <TestChart title="Productores por comunidad" :segmentacion="data.segmentacion"></TestChart>
+                <TestChart title="Ganancias por Producto (En Soles)" :segmentacion="data.sales"></TestChart>
+            </div>
+            <CreditsChart :credits="data.credits"/>
         </div>
     </AppLayout>
 </template>

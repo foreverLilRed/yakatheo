@@ -51,9 +51,6 @@ onMounted(() => initFlowbite())
                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                     Dashboard
                 </NavLink>
-                <NavLink :href="route('profile.show')" :active="route().current('profile.show')">
-                    Profile
-                </NavLink>
                 <NavLink :href="route('productors')" :active="route().current('productors')">
                     Gestionar Productores
                 </NavLink>

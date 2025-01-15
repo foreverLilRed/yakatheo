@@ -101,7 +101,7 @@ class ProductorController extends Controller
                     'dni' => $productor->dni,
                     'nacimiento' => $productor->birthday,
                     'certificaciones' => $productor->seals->count(),
-                    'tierras' => $productor->terrains->count()
+                    'tierras' => $productor->terrains->count(),
                 ];
             });
 

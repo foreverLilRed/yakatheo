@@ -12,7 +12,8 @@ class Product extends Model
         "name"
     ];
 
-    public function procurements(){
+    public function procurements()
+    {
         return $this->hasMany(Procurement::class);
     }
 
@@ -25,15 +26,31 @@ class Product extends Model
         return $query;
     }
 
-    public function sales(){
+    public function sales()
+    {
         return $this->hasMany(Sale::class);
     }
 
-    public function stocks(){
+    public function stocks()
+    {
         return $this->hasMany(Stock::class);
     }
 
-    public function totalStock(){
+    public function totalStock()
+    {
         return $this->stocks->where('status', 1)->sum('quantity') - $this->stocks->where('status', 0)->sum('quantity');
+    }
+
+    public function earnings($from = null)
+    {
+        $query = $this->sales(); 
+
+        if ($from) {
+            $query->where('created_at', '>=', $from);
+        }
+
+        return $query->get()->map(function ($sale) {
+            return $sale->total();
+        })->sum();
     }
 }
