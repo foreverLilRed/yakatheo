@@ -13,7 +13,8 @@ class Productor extends Model
         "surnames",
         "dni",
         "birthday",
-        "community_id"
+        "community_id",
+        "socio"
     ];
 
     public function seals()

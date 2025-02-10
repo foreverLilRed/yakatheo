@@ -1,4 +1,3 @@
-
 <script setup>
 import { onMounted, ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
@@ -12,6 +11,8 @@ defineProps({
     title: String,
 });
 
+onMounted(() => initFlowbite())
+
 const isSidebarOpen = ref(false);
 
 const logout = () => {
@@ -22,75 +23,92 @@ onMounted(() => initFlowbite())
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col lg:flex-row bg-gray-100">
-        <Head :title="title" />
 
-        <!-- Sidebar -->
-        <aside
-            class="bg-white shadow-lg w-full lg:w-64 flex flex-col fixed lg:relative lg:h-auto h-full transition-transform lg:translate-x-0"
-            :class="{ '-translate-x-full': !isSidebarOpen, 'translate-x-0': isSidebarOpen }"
-        >
-            <div class="flex items-center justify-between lg:justify-center p-4 border-b">
-                <!-- Logo -->
-                <Link :href="route('dashboard')">
-                    <ApplicationMark class="h-10 w-auto" />
-                </Link>
+    <button data-drawer-target="sidebar-multi-level-sidebar" data-drawer-toggle="sidebar-multi-level-sidebar"
+        aria-controls="sidebar-multi-level-sidebar" type="button"
+        class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+        <span class="sr-only">Open sidebar</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+            </path>
+        </svg>
+    </button>
 
-                <!-- Close button (mobile only) -->
-                <button
-                    class="lg:hidden text-gray-500 hover:text-gray-700 focus:outline-none"
-                    @click="isSidebarOpen = false"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <nav class="mt-4 flex-grow">
-                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                    Dashboard
-                </NavLink>
-                <NavLink :href="route('productors')" :active="route().current('productors')">
-                    Gestionar Productores
-                </NavLink>
-                <NavLink :href="route('products')" :active="route().current('products')">
-                    Gestionar Productos
-                </NavLink>
-                <NavLink :href="route('procurements')" :active="route().current('procurements')">
-                    Gestionar Acopios
-                </NavLink>
-                <NavLink :href="route('sales')" :active="route().current('sales')">
-                    Gestionar Ventas
-                </NavLink>
-                <NavLink :href="route('credits')" :active="route().current('credits')">
-                    Gestionar Creditos
-                </NavLink>
-                <!-- Add more navigation links as needed -->
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <div class="flex-grow flex flex-col">
-            <!-- Header -->
-            <header class="bg-white shadow flex items-center justify-between p-4 lg:hidden">
-                <button
-                    class="text-gray-500 hover:text-gray-700 focus:outline-none"
-                    @click="isSidebarOpen = !isSidebarOpen"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-                <h1 class="text-xl font-semibold">{{ title }}</h1>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+    <aside id="sidebar-multi-level-sidebar"
+        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        aria-label="Sidebar">
+        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+            <ul class="space-y-2 font-medium">
+                <li>
+                    <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        Dashboard
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink :href="route('productors')" :active="route().current('productors')">
+                        Gestionar Productores
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink :href="route('products')" :active="route().current('products')">
+                        Gestionar Productos
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink :href="route('procurements')" :active="route().current('procurements')">
+                        Gestionar Acopios
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink :href="route('sales')" :active="route().current('sales')">
+                        Gestionar Ventas
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink :href="route('credits')" :active="route().current('credits')">
+                        Gestionar Creditos
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink :href="route('uploads')" :active="route().current('uploads')">
+                        Carga de Archivos
+                    </NavLink>
+                </li>
+                <li>
+                    <button type="button"
+                        class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                        <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 18 21">
+                            <path
+                                d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+                        </svg>
+                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Generar Documentos</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+                    <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                        <NavLink :href="route('compromiso-produccion')" :active="route().current('compromiso-produccion')">
+                            Compromiso de producciòn
+                        </NavLink>
+                    </ul>
+                </li>
+            </ul>
         </div>
+    </aside>
+
+    <div class="p-4 sm:ml-64">
+        <main>
+            <slot />
+        </main>
     </div>
+
 </template>
 
 <style scoped>

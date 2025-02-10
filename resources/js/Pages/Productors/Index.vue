@@ -4,6 +4,9 @@ import ProductorsTable from "@/Components/ProductorsTable.vue";
 import RegisterProductor from "@/Components/RegisterProductor.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import throttle from "lodash/throttle";
+import axios from "axios";
+import ReportProductors from "@/Components/ReportProductors.vue";
+import RegisterCommunity from "@/Components/RegisterCommunity.vue";
 
 export default {
     components: {
@@ -11,6 +14,8 @@ export default {
         Paginator,
         ProductorsTable,
         RegisterProductor,
+        ReportProductors,
+        RegisterCommunity
     },
     props: {
         productors: {
@@ -23,6 +28,9 @@ export default {
             form: {
                 search: "",
             },
+            searchFilters: {
+                birthday: "",
+            }
         };
     },
     watch: {
@@ -61,6 +69,8 @@ export default {
                     />
                 </label>
                 <RegisterProductor></RegisterProductor>
+                <RegisterCommunity></RegisterCommunity>
+                <ReportProductors></ReportProductors>
             </div>
 
             <ProductorsTable :productors="productors.data" class="my-6"></ProductorsTable>

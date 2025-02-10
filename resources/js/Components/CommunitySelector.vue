@@ -27,7 +27,7 @@
         <div
             id="dropdownSearch"
             v-show="isDropdownVisible"
-            class="absolute z-10 bg-white rounded-lg shadow w-60 dark:bg-gray-700"
+            class="z-10 bg-white rounded-lg shadow mt-2 w-full dark:bg-gray-700"
         >
             <div class="p-3">
                 <label for="input-group-search" class="sr-only">Search</label>

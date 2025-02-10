@@ -25,10 +25,15 @@ class ProductorController extends Controller
                     'id' => $productor->id,
                     'nombres' => $productor->names,
                     'apellidos' => $productor->surnames,
+                    'socio' => (bool) $productor->socio ? 'Si' : 'No',
                     'dni' => $productor->dni,
                     'nacimiento' => $productor->birthday,
                     'certificaciones' => $productor->seals->count(),
-                    'tierras' => $productor->terrains->count()
+                    'tierras' => $productor->terrains->count(),
+                    'info' => [
+                        'certificaciones' => $productor->seals->pluck('name')
+                    ],
+                    'ventas' => $productor->procurements->count(),
                 ])
         ]);
     }

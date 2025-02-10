@@ -20,8 +20,8 @@ class ProcurementController extends Controller
     public function index()
     {
         return Inertia::render('Procurements/Index', [
-            'procurements' => Procurement::query()
-            ->with(['productor.community', 'product'])
+                'procurements' => Procurement::query()
+                ->with(['productor.community', 'product'])
                 ->orderBy('weight')
                 ->filter(RequestFacade::get('search'))
                 ->paginate(25)
@@ -31,7 +31,9 @@ class ProcurementController extends Controller
                     'weight' => $procurement->weight,
                     'unit_price' => $procurement->unit_price,
                     'product' => $procurement->product,
-                    'productor' => $procurement->productor,
+                    'productor' => $procurement->productor ?? 'No identificado',
+                    'comunidad' => $procurement->productor->community->name ?? 'No identificado',
+                    'total' => $procurement->total(),
                 ])
         ]);
     }

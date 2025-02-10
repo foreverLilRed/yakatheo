@@ -8,7 +8,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <style>
-        /* Estilos generales */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #ffffff;

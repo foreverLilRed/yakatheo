@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('procurements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained();
-            $table->foreignId('productor_id')->constrained();
+            $table->foreignId('productor_id')->constrained()->nullable();
             $table->decimal('weight');
             $table->decimal("unit_price");
             $table->timestamps();

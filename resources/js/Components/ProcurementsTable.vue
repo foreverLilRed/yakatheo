@@ -5,12 +5,7 @@ const props = defineProps({
     procurements: Array,
 });
 
-const procurementsWithTotal = computed(() =>
-    props.procurements.map((procurement) => ({
-        ...procurement,
-        total: procurement.weight * procurement.unit_price,
-    }))
-);
+
 </script>
 
 <template>
@@ -30,13 +25,13 @@ const procurementsWithTotal = computed(() =>
                 </thead>
                 <tbody>
                     <tr
-                        v-for="procurement in procurementsWithTotal"
+                        v-for="procurement in procurements"
                         :key="procurement.id"
                     >
                         <td class="text-nowrap">{{procurement.id}}</td>
                         <td>{{procurement.product.name}}</td>
                         <td>{{procurement.productor.names}}</td>
-                        <td>{{procurement.productor.community.name}}</td>
+                        <td>{{procurement.comunidad}}</td>
                         <td>{{procurement.weight}}</td>
                         <td>{{procurement.unit_price}}</td>
                         <td>{{procurement.total}}</td>

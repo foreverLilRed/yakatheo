@@ -11,7 +11,8 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
         './node_modules/flyonui/dist/js/*.js',
-        "./node_modules/flowbite/**/*.js"
+        "./node_modules/flowbite/**/*.js",
+        './resources/views/documents/*.blade.php', 
     ],
 
     theme: {

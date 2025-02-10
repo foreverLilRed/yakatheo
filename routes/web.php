@@ -10,9 +10,11 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProcurementController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductorController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SealsController;
 use App\Http\Controllers\TerrainController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -70,3 +72,16 @@ Route::get('/credits',[CreditController::class,'index'])->name('credits');
 Route::post('/credits/store',[CreditController::class,'store'])->name('credits-store');
 
 Route::post('/payments/store',[PaymentsController::class,'store'])->name('payments-store');
+
+Route::get('/reports/productors',[ReportController::class,'productors']);
+
+Route::get('/documents', [DocumentController::class, 'index'])->name('documents');	
+Route::get('/documents/form/compromiso-produccion', [DocumentController::class, 'formCompromisoProduccion'])->name('compromiso-produccion');	
+Route::get('/documents/store/compromiso-produccion', [DocumentController::class, 'storeCompromisoProduccion'])->name('store-compromiso-produccion');	
+Route::get('/documents/form/ficha-control-interno', [DocumentController::class, 'formFichaControlInterno'])->name('ficha-control-interno');	
+Route::get('/documents/store/ficha-control-interno', [DocumentController::class, 'storeFichaControlInterno'])->name('store-ficha-control-interno');	
+
+
+Route::get('/uploads', [UploadController::class, 'index'])->name('uploads');
+Route::post('/uploads/store', [UploadController::class, 'store'])->name('uploads-store');
+Route::post('/communities/store',[CommunityController::class,'store'])->name('community-store');

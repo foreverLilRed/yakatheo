@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('productors', function (Blueprint $table) {
             $table->id();
             $table->string('names');
-            $table->string('surnames');
-            $table->string('dni');
-            $table->date('birthday');
-            $table->unsignedBigInteger('community_id');
+            $table->string('surnames')->nullable();
+            $table->string('dni')->nullable();
+            $table->date('birthday')->nullable();
+            $table->unsignedBigInteger('community_id')->nullable();
             $table->foreign('community_id')->references('id')->on('communities');
             $table->timestamps();
         });

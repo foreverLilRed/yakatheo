@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\Seal;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,6 +22,13 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456789'),
         ]);
 
+        Product::create(['name' => 'BABA 1',]);
+        Product::create(['name' => 'BABA 2',]);
+        Product::create(['name' => 'PLACENTA FRESCA',]);
+        Product::create(['name' => 'PLACENTA SECA',]);
+        Product::create(['name' => 'SECO 1',]);
+        Product::create(['name' => 'SECO 2',]);
+        
         Seal::insert([
             ['name' => 'Orgánico Estados Unidos', 'description' => 'Certificación orgánica en EE.UU.', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Unión Europea', 'description' => 'Certificación orgánica en Europa', 'created_at' => now(), 'updated_at' => now()],
@@ -31,7 +39,9 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Conservación Ambiental', 'description' => 'Prácticas sostenibles para el medio ambiente', 'created_at' => now(), 'updated_at' => now()],
         ]);
 
+        /*
         $this->call(CommunitySeeder::class);
         $this->call(ProductorSeeder::class);
+        */
     }
 }
