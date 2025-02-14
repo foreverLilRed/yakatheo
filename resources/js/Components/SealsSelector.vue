@@ -1,21 +1,30 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 
+const data = defineProps({
+    sellos: {
+        type: Array,
+        required: false,
+        default: () => [] 
+    },
+})
 const seals = ref([]); 
 const selectedSeals = ref([]);  
 
 const emit = defineEmits(['selectedSeals'])
 onMounted(() => {
     fetchSeals();
+    if (data.sellos.length > 0) {
+        selectedSeals.value = data.sellos;
+    }
 });
 
 const fetchSeals = async () => {
     try {
         const response = await axios.get("/fetch/seals");
-        seals.value = response.data;  // Asigna la respuesta a seals
-        console.log("Respuesta:", response.data);
+        seals.value = response.data;  
     } catch (error) {
-        console.error("Error:", error);
+        alert("No se pudo cargar los sellos: " + error);
     }
 };
 

@@ -57,11 +57,11 @@ class UploadImport implements ToCollection, WithCalculatedFormulas
     {
         $rows->skip($this->inicio)->take($this->fin)->each(function ($row) {
             $dni = !empty($row[1]) ? $row[1] : null;;
-            $nombres_completos = $this->separarNombreApellido($row[2]);
+            //$nombres_completos = $this->separarNombreApellido($row[2]);
             $nombres = !empty($row[2]) ? $row[2] : null;
             //$apellidos = $nombres_completos['apellidos'] ?? 'Sin Apellidos';
-            $nacimiento = Date::excelToDateTimeObject($row[5])->format('Y-m-d');
-            $comunidad = !empty($row[7]) ? $row[7] : null;
+            $nacimiento = !empty($row[5]) ? Date::excelToDateTimeObject($row[5])->format('Y-m-d') : null;
+            $comunidadNombre = !empty($row[7]) ? $row[7] : null;
 
             $productor = null;
 
@@ -83,49 +83,54 @@ class UploadImport implements ToCollection, WithCalculatedFormulas
                 $row[20]
             ];
 
+            if ($comunidadNombre !== null) {
+                $comunidad = Community::where('name', 'like', "%{$comunidadNombre}%")->first();
+
+                if (!$comunidad) {
+                    $comunidad = Community::create(['name' => $comunidadNombre]);
+                }
+            }
+
+            $query = Productor::query();
+
+            if ($dni !== null || $nombres !== null) {
+                $query = Productor::query();
+            
+                if ($dni !== null) {
+                    $query->where('dni', $dni);
+                }
+            
+                if ($nombres !== null) {
+                    $query->where('names', 'like', "%{$nombres}%");
+                }
+            
+                $productor = $query->first();
+            }
+
+            $productor = $query->exists() ? $query->first() : null;
+
+            if ($productor) {
+                if (!$productor->community_id && $comunidad) {
+                    $productor->community_id = $comunidad->id;
+                    $productor->save();
+                }
+            } else {
+                $productor = Productor::create([
+                    "names" => $nombres ?? 'No identificado',
+                    "surnames" => '',
+                    "dni" => $dni,
+                    "birthday" => $nacimiento,
+                    "socio" => $this->socios,
+                    "community_id" => $comunidad ? $comunidad->id : null
+                ]);
+            }
+
+
             if (
                 array_filter($kg_values, fn($val) => $val !== null && $val != 0) &&
                 array_filter($total_values, fn($val) => $val !== null && $val != 0)
             ) {
 
-                if ($comunidad !== null) {
-                    $comunidad = Community::where('name', 'like', "%{$comunidad}%")->first();
-                
-                    if (!$comunidad) {
-                        $comunidad = Community::create(['name' => $comunidad]);
-                    }
-                }
-                
-                $query = Productor::query();
-
-                if($dni !== null){
-                    $query->where('dni', $dni);
-                }
-
-                if($nombres !== null){
-                    $query->orWhere('names', 'like', "%{$nombres}%");
-                }
-
-                if($query->exists()){
-                    $productor = $query->first();
-                }
-                
-
-                if ($productor) {
-                    if (!$productor->community_id && $comunidad) {
-                        $productor->community_id = $comunidad->id;
-                        $productor->save();
-                    }
-                } else {
-                    $productor = Productor::create([
-                        "names" => $nombres ?? 'No identificado',
-                        "surnames" => '',
-                        "dni" => $dni,
-                        "birthday" => $nacimiento,
-                        "socio" => $this->socios,
-                        "community_id" => $comunidad ? $comunidad->id : null
-                    ]);
-                }
 
 
                 $productos = [

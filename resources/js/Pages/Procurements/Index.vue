@@ -47,25 +47,25 @@ export default {
             </h2>
         </template>
 
-        <div class="px-12 py-12">
-            <div class="flex items-center space-x-4">
-                <label class="input-group max-w-sm flex-grow">
+        <div class="px-4 sm:px-8 md:px-12 py-8 md:py-12">
+            <div class="flex flex-wrap items-center gap-4">
+                <label class="input-group w-full sm:w-auto flex-grow">
                     <span class="input-group-text">
-                        <span
-                            class="icon-[tabler--search] text-base-content/80 size-6"
-                        ></span>
+                        <span class="icon-[tabler--search] text-base-content/80 size-6"></span>
                     </span>
                     <input
                         v-model="form.search"
                         type="search"
-                        class="input grow placeholder:italic"
-                        placeholder="Buscar por nombre, apellidos o dni..."
+                        class="input w-full sm:w-auto placeholder:italic"
+                        placeholder="Buscar por nombre, apellidos o DNI..."
                     />
                 </label>
-                <RegisterProcurement></RegisterProcurement>
+                <RegisterProcurement class="w-full sm:w-auto"></RegisterProcurement>
             </div>
             <ProcurementsTable :procurements="procurements.data" class="mt-6"></ProcurementsTable>
-            <Paginator :links="procurements.links"></Paginator>
+            <div class="flex justify-center mt-4">
+                <Paginator :links="procurements.links"></Paginator>
+            </div>
         </div>
     </AppLayout>
 </template>

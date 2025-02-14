@@ -78,7 +78,7 @@ class CommunityController extends Controller
             ->through(function ($community) {
                 return [
                     'id' => $community->id,
-                    'nombre' => $community->name,
+                    'name' => $community->name,
                 ];
             });
 

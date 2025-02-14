@@ -14,6 +14,11 @@ const closeModal = () => {
 
 const data = defineProps({
     productor: Object,
+    withSearch: {
+        type: Boolean,
+        required: false,
+        default: true,
+    },
 });
 const form = useForm({
     productor_id: data.productor.id,
@@ -35,7 +40,7 @@ const area_total = ref("");
 const area_production = ref("");
 
 watch(modalStatus, (newStatus) => {
-    if (newStatus) {
+    if (newStatus && data.withSearch) {
         isLoading.value = true;
         axios
             .get(`/fetch/terrains/${data.productor.id}`)
@@ -77,10 +82,11 @@ watch([area_total, area_production], ([newTotal, newProduction]) => {
         Registrar tierra
     </button>
     <DialogModal :show="modalStatus" @close="closeModal">
-        <template #title>Registrar Tierra para {{ data.productor.nombres }}</template>
+        <template #title>Registrar Tierra</template>
 
         <template #content>
-            <div v-if="isLoading" class="flex justify-center items-center">
+            <template v-if="data.withSearch">
+                <div v-if="isLoading" class="flex justify-center items-center">
                 <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-500"></div>
                 <span class="ml-2 text-blue-500">Cargando...</span>
             </div>
@@ -94,6 +100,7 @@ watch([area_total, area_production], ([newTotal, newProduction]) => {
                 </ul>
                 <p v-else class="text-gray-500">No hay terrenos registrados.</p>
             </div>
+            </template>
             <hr class="w-full h-[1.5px] bg-black my-3">
             <form @submit.prevent="registerTerrain">
                 <div class="mb-5">

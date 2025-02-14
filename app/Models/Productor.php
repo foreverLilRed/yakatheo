@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,10 @@ class Productor extends Model
         "birthday",
         "community_id",
         "socio"
+    ];
+
+    protected $casts = [
+        'socio' => 'boolean', // Asegura que siempre sea booleano
     ];
 
     public function seals()
@@ -44,10 +49,21 @@ class Productor extends Model
     {
         return $this->hasMany(Procurement::class);
     }
+
+    public function acopiosEnRango($inicio = null, $fin = null) {
+        $inicio = $inicio ?? Carbon::now()->startOfMonth();
+        $fin = $fin ?? Carbon::now()->endOfMonth();
+        
+        return $this->procurements()
+            ->whereBetween('created_at', [$inicio, $fin])
+            ->get();
+    }
+    
     
     public function community()
     {
         return $this->belongsTo(Community::class);
     }
+
 
 }

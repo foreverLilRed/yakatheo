@@ -38,7 +38,9 @@ Route::middleware([
 
 Route::get('/productors',[ProductorController::class,'index'])->name('productors');
 Route::post('/productors/store',[ProductorController::class,'store'])->name('productors-store');
+Route::put('/productors/{productor}',[ProductorController::class,'update'])->name('productors-update');
 Route::get('/productors/fetch-query', [ProductorController::class, 'fetchQuery']);
+Route::get('/productors/{productor}',[ProductorController::class,'show'])->name('productors-show');
 
 Route::get('/products',[ProductController::class,'index'])->name('products');
 Route::post('/products/store',[ProductController::class,'store'])->name('product-store');
@@ -47,6 +49,7 @@ Route::get('/products/fetch-query', [ProductController::class, 'fetchQuery']);
 Route::get('/communities/fetch-query', [CommunityController::class, 'fetchQuery']);
 
 Route::post('/terrains/store',[TerrainController::class,'store'])->name('terrains-store');
+Route::delete('/terrains/{terrain}',[TerrainController::class,'destroy'])->name('terrains-destroy');
 
 Route::get('/fetch/terrains/{productor}',[TerrainController::class,'fetchOwner'])->name('fetch-terrains-productor');
 Route::get('/fetch/seals', [SealsController::class, 'fetch'])->name('fetch-seals');

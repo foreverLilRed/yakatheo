@@ -6,7 +6,7 @@
             type="button"
             @click="toggleDropdown"
         >
-            {{ selectedcommunity ? `${selectedcommunity.nombre}` : "Seleccionar" }}
+            {{ selectedcommunity ? `${selectedcommunity.name}` : "Seleccionar" }}
             <svg
                 class="w-2.5 h-2.5 ms-3"
                 aria-hidden="true"
@@ -55,7 +55,7 @@
                             class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
                         >
                             <span class="font-bold">{{ community.id }} - </span>
-                            {{ community.nombre }}
+                            {{ community.name }}
                         </p>
                     </div>
                 </li>
@@ -68,6 +68,10 @@
 import axios from "axios";
 import { onMounted, ref, onBeforeUnmount, defineEmits } from "vue";
 import PaginatorEscape from "./PaginatorEscape.vue";
+
+const data = defineProps({
+    comunidad: { type: Object, required: false, default: null },
+});
 
 const emit = defineEmits(["emitcommunity"]);
 
@@ -102,7 +106,7 @@ const searchcommunitys = async (url = "/communities/fetch-query") => {
         });
         communitys.value = response.data;
     } catch (error) {
-        console.error("Error fetching communitys:", error);
+        console.error("Error al consultar comunidades:", error);
     }
 };
 
@@ -115,6 +119,7 @@ const selectcommunity = (community) => {
 onMounted(() => {
     document.addEventListener("click", closeDropdown);
     searchcommunitys();
+    selectcommunity(data.comunidad);
 });
 
 onBeforeUnmount(() => {

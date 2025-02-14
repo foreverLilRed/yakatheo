@@ -104,7 +104,11 @@ class TerrainController extends Controller
      */
     public function destroy(Terrain $terrain)
     {
-        //
+        try {
+            $terrain->delete();
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
 
     public function fetchOwner(Productor $productor){

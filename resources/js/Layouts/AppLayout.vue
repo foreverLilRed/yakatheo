@@ -48,27 +48,27 @@ onMounted(() => initFlowbite())
                 </li>
                 <li>
                     <NavLink :href="route('productors')" :active="route().current('productors')">
-                        Gestionar Productores
+                        Productores
                     </NavLink>
                 </li>
                 <li>
                     <NavLink :href="route('products')" :active="route().current('products')">
-                        Gestionar Productos
+                        Productos
                     </NavLink>
                 </li>
                 <li>
                     <NavLink :href="route('procurements')" :active="route().current('procurements')">
-                        Gestionar Acopios
+                        Acopios
                     </NavLink>
                 </li>
                 <li>
                     <NavLink :href="route('sales')" :active="route().current('sales')">
-                        Gestionar Ventas
+                        Ventas
                     </NavLink>
                 </li>
                 <li>
                     <NavLink :href="route('credits')" :active="route().current('credits')">
-                        Gestionar Creditos
+                        Creditos
                     </NavLink>
                 </li>
                 <li>

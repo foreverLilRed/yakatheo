@@ -21,7 +21,7 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
-        "apexcharts": "^4.3.0",
+        "apexcharts": "^3.46.0",
         "chart.js": "^4.4.7",
         "flyonui": "^1.1.0",
         "vue-chartjs": "^5.3.2",

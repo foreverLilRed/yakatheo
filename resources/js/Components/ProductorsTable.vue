@@ -35,7 +35,9 @@ const data = defineProps({
           <td>{{ productor.tierras ? productor.tierras : 0}}</td>
           <td class="flex items-center gap-x-2">
             <RegisterTerrain :productor="productor"/>
-            <ProductorInfo :productor="productor"></ProductorInfo>
+            <a :href="`/productors/${productor.id}`" class="btn btn-primary btn-xs">
+              Gestionar
+            </a>
           </td>
         </tr>
       </tbody>

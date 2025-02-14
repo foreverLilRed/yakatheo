@@ -3,7 +3,6 @@ import RegisterBuyer from "@/Components/RegisterBuyer.vue";
 import RegisterSale from "@/Components/RegisterSale.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import throttle from "lodash/throttle";
-import Register from "../Auth/Register.vue";
 import SalesTable from "@/Components/SalesTable.vue";
 import Paginator from "@/Components/Paginator.vue";
 
@@ -48,26 +47,30 @@ export default {
             </h2>
         </template>
 
-        <div class="px-12 py-12">
-            <div class="flex items-center space-x-4">
-                <label class="input-group max-w-sm flex-grow">
+        <div class="px-4 sm:px-8 md:px-12 py-8 md:py-12">
+            <div class="flex flex-wrap items-center gap-4">
+                <label class="input-group w-full sm:w-auto flex-grow">
                     <span class="input-group-text">
-                        <span
-                            class="icon-[tabler--search] text-base-content/80 size-6"
-                        ></span>
+                        <span class="icon-[tabler--search] text-base-content/80 size-6"></span>
                     </span>
                     <input
                         v-model="form.search"
                         type="search"
-                        class="input grow placeholder:italic"
+                        class="input w-full sm:w-auto placeholder:italic"
                         placeholder="Buscar por proveedor, producto..."
                     />
                 </label>
-                <RegisterSale></RegisterSale>
-                <RegisterBuyer></RegisterBuyer>
+
+                <div class="flex flex-wrap w-full sm:w-auto gap-2">
+                    <RegisterSale class="w-full sm:w-auto"></RegisterSale>
+                    <RegisterBuyer class="w-full sm:w-auto"></RegisterBuyer>
+                </div>
             </div>
+
             <SalesTable :sales="sales.data" class="mt-6"></SalesTable>
-            <Paginator :links="sales.links"></Paginator>
+            <div class="flex justify-center mt-4">
+                <Paginator :links="sales.links"></Paginator>
+            </div>
         </div>
     </AppLayout>
 </template>
