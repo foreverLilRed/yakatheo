@@ -28,26 +28,27 @@ const submit = () => {
 </script>
 
 <template>
+
     <Head title="Log in" />
 
-    <div class="relative flex min-h-screen items-center justify-center bg-white overflow-hidden">
-        <!-- Círculos en movimiento -->
-        <div class="absolute inset-0">
-            <div class="absolute top-10 left-10 w-40 h-40 bg-green-300 rounded-full blur-3xl opacity-30 animate-floating-1"></div>
-            <div class="absolute top-1/2 left-20 w-32 h-32 bg-green-400 rounded-full blur-2xl opacity-20 animate-floating-2"></div>
-            <div class="absolute bottom-10 right-10 w-52 h-52 bg-green-200 rounded-full blur-3xl opacity-25 animate-floating-3"></div>
-            <div class="absolute bottom-1/3 right-20 w-36 h-36 bg-green-300 rounded-full blur-2xl opacity-30 animate-floating-4"></div>
-            <div class="absolute top-1/4 right-1/4 w-44 h-44 bg-green-400 rounded-full blur-3xl opacity-20 animate-floating-5"></div>
-        </div>
+    <div class="relative flex min-h-screen items-center justify-center overflow-hidden bg-black">
+        <video class="absolute inset-0 w-full h-full object-cover" autoplay loop muted playsinline>
+            <source src="/images/video.webm" type="video/mp4">
+            Tu navegador no soporta videos en HTML5.
+        </video>
 
-        <div class="relative z-10 w-full max-w-md p-8 bg-white shadow-xl rounded-2xl">
-            <div class="flex justify-center mb-6">
-                <AuthenticationCardLogo />
+        <div class="absolute inset-0 bg-black/50"></div>
+
+        <div class="relative z-10 w-full max-w-md p-8 bg-white/30 shadow-xl rounded-2xl backdrop-blur-md">
+            <div class="flex flex-col items-center mb-6 text-2xl text-white font-semibold">
+                <img src="/images/logo.jpg" class="rounded-full mb-2" style="width: 6vh;" alt="">
+                <span>Sistema Yakatheo</span>
             </div>
 
             <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
                 {{ status }}
             </div>
+
 
             <form @submit.prevent="submit" class="space-y-4">
                 <div>
@@ -65,72 +66,10 @@ const submit = () => {
                         required autocomplete="current-password" />
                     <InputError class="mt-2" :message="form.errors.password" />
                 </div>
-
-                <div class="flex items-center">
-                    <input id="remember" type="checkbox" v-model="form.remember"
-                        class="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500" />
-                    <label for="remember" class="ml-2 text-sm text-gray-700">Remember me</label>
-                </div>
-
                 <div class="flex items-center justify-between">
-                    <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
-                        class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition shadow-md">
-                        Log in
-                    </PrimaryButton>
+                    <button class="btn btn-success btn-gradient btn-block" :disabled="form.processing">Ingresar</button>
                 </div>
             </form>
         </div>
     </div>
 </template>
-
-<style scoped>
-@keyframes floating-1 {
-    0% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(-20px) translateX(10px); }
-    100% { transform: translateY(0) translateX(0); }
-}
-
-@keyframes floating-2 {
-    0% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(15px) translateX(-15px); }
-    100% { transform: translateY(0) translateX(0); }
-}
-
-@keyframes floating-3 {
-    0% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(-10px) translateX(-10px); }
-    100% { transform: translateY(0) translateX(0); }
-}
-
-@keyframes floating-4 {
-    0% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(25px) translateX(5px); }
-    100% { transform: translateY(0) translateX(0); }
-}
-
-@keyframes floating-5 {
-    0% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(-15px) translateX(-5px); }
-    100% { transform: translateY(0) translateX(0); }
-}
-
-.animate-floating-1 {
-    animation: floating-1 6s infinite ease-in-out;
-}
-
-.animate-floating-2 {
-    animation: floating-2 5s infinite ease-in-out;
-}
-
-.animate-floating-3 {
-    animation: floating-3 7s infinite ease-in-out;
-}
-
-.animate-floating-4 {
-    animation: floating-4 6.5s infinite ease-in-out;
-}
-
-.animate-floating-5 {
-    animation: floating-5 5.5s infinite ease-in-out;
-}
-</style>
