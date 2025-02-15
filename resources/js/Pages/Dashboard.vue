@@ -18,7 +18,8 @@ const data = defineProps({
             </h2>
         </template>
 
-        <div class="px-12 py-12">
+        <div class="px-4 py-4">
+            <h2 class="text-base-content text-3xl mb-8">Productores</h2>
             <div class="grid grid-cols-1 md:grid-cols-2">
                 <TestChart title="Productores por comunidad" :segmentacion="data.segmentacion"></TestChart>
                 <TestChart title="Ganancias por Producto (En Soles)" :segmentacion="data.sales"></TestChart>

@@ -18,6 +18,20 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $allProducts = Product::all();
+        $total = $allProducts->sum(function ($product) {
+            return $product->totalStock();
+        });
+
+        $segmentacion = Product::all()->map(function ($product) use ($total) {
+            return [
+                'nombres' => $product->name,
+                'porcentaje_stock' => $product->totalStock() > 0 
+                    ? round(($product->totalStock() / $total) * 100, 2) // Redondear después de multiplicar
+                    : 0,
+            ];
+        });
+
         return Inertia::render('Products/Index',[
             'products' => Product::query()
                 ->orderBy('name')
@@ -28,7 +42,12 @@ class ProductController extends Controller
                     'id' => $product->id,
                     'nombres' => $product->name,
                     'stock' => $product->totalStock(),
-                ])
+                ]),
+            'segmentacion' => [
+                'total' => $total,
+                'productos' => $segmentacion->pluck('nombres'),
+                'porcentajes' => $segmentacion->pluck('porcentaje_stock'),
+            ],
         ]);
     }
 
@@ -94,7 +113,7 @@ class ProductController extends Controller
         $products = Product::query()
             ->orderBy('name')
             ->filter($request->search)
-            ->paginate(2)
+            ->paginate(10)
             ->withQueryString()
             ->through(function ($product) {
                 return [

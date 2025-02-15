@@ -21,7 +21,7 @@ class SalesController extends Controller
             'sales' => Sale::query()
                 ->orderBy('created_at', 'desc')
                 ->filter(RequestFacade::get('search'))
-                ->paginate(25)
+                ->paginate(15)
                 ->withQueryString()
                 ->through(fn($sale) => [
                     'id' => $sale->id,

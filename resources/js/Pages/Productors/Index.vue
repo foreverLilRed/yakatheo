@@ -19,7 +19,11 @@ export default {
     },
     props: {
         productors: {
-            type: Object, 
+            type: Object,
+            required: true,
+        },
+        segmentacion: {
+            type: Array,
             required: true,
         },
     },
@@ -47,29 +51,26 @@ export default {
 
 <template>
     <AppLayout title="Productores">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Productores
-            </h2>
-        </template>
-
-        <div class="px-4 sm:px-8 md:px-12 py-8 md:py-12">
+        <div class="px-4 py-4">
+            <h2 class="text-base-content text-3xl mb-8">Productores</h2>
             <div class="flex flex-wrap items-center gap-4">
                 <label class="input-group w-full sm:w-auto flex-grow">
                     <span class="input-group-text">
                         <span class="icon-[tabler--search] text-base-content/80 size-6"></span>
                     </span>
-                    <input
-                        v-model="form.search"
-                        type="search"
-                        class="input w-full sm:w-auto placeholder:italic"
-                        placeholder="Buscar por nombre, apellidos o DNI..."
-                    />
+                    <input v-model="form.search" type="search" class="input w-full placeholder:italic"
+                        placeholder="Buscar por nombre, apellidos o DNI..." />
                 </label>
                 <div class="flex flex-wrap w-full sm:w-auto gap-2">
-                    <RegisterProductor class="w-full sm:w-auto"></RegisterProductor>
-                    <RegisterCommunity class="w-full sm:w-auto"></RegisterCommunity>
-                    <ReportProductors class="w-full sm:w-auto"></ReportProductors>
+                    <div class="w-full sm:w-auto">
+                        <RegisterProductor />
+                    </div>
+                    <div class="w-full sm:w-auto">
+                        <RegisterCommunity />
+                    </div>
+                    <div class="w-full sm:w-auto">
+                        <ReportProductors />
+                    </div>
                 </div>
             </div>
             <ProductorsTable :productors="productors.data" class="my-6"></ProductorsTable>

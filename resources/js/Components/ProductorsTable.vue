@@ -9,7 +9,7 @@ const data = defineProps({
 
 <template>
   <div class="w-full overflow-x-auto">
-    <table class="table-xs table">
+    <table class="table-xs table overflow-x-auto">
       <thead>
         <tr>
           <th>Nombres</th>

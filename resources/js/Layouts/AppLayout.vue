@@ -14,6 +14,7 @@ defineProps({
 onMounted(() => initFlowbite())
 
 const isSidebarOpen = ref(false);
+const currentYear = ref(new Date().getFullYear()); 
 
 const logout = () => {
     router.post(route('logout'));
@@ -37,9 +38,13 @@ onMounted(() => initFlowbite())
     </button>
 
     <aside id="sidebar-multi-level-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full md:translate-x-0"
         aria-label="Sidebar">
-        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div class="h-full px-3 py-4 overflow-y-auto bg-emerald-700 dark:bg-gray-800">
+            <div class="flex items-center gap-4 mb-6">
+                <img src="/images/logo.jpg" class="rounded-full" style="width: 6vh;" alt="">
+                <h1 class="text-white font-semibold text-xl">Yakatheo</h1>
+            </div>
             <ul class="space-y-2 font-medium">
                 <li>
                     <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
@@ -80,12 +85,6 @@ onMounted(() => initFlowbite())
                     <button type="button"
                         class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                         aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                        <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 18 21">
-                            <path
-                                d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
-                        </svg>
                         <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Generar Documentos</span>
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 10 6">
@@ -94,19 +93,43 @@ onMounted(() => initFlowbite())
                         </svg>
                     </button>
                     <ul id="dropdown-example" class="hidden py-2 space-y-2">
-                        <NavLink :href="route('compromiso-produccion')" :active="route().current('compromiso-produccion')">
+                        <NavLink :href="route('compromiso-produccion')"
+                            :active="route().current('compromiso-produccion')">
                             Compromiso de producciòn
                         </NavLink>
                     </ul>
+                </li>
+                <li>
+                    <button @click="logout"
+                        class="flex items-center w-full p-2 text-base text-red-300 transition duration-75 rounded-lg group hover:text-white hover:bg-red-500 dark:text-red-400 dark:hover:bg-gray-700">
+                        <span class="flex-1 ms-3 text-left whitespace-nowrap">Cerrar sesión</span>
+                    </button>
                 </li>
             </ul>
         </div>
     </aside>
 
-    <div class="p-4 sm:ml-64">
-        <main>
+    <div class="flex flex-col min-h-screen md:ml-64">
+        <main class="flex-1 p-4">
             <slot />
         </main>
+
+        <footer class="footer bg-base-200/60 px-6 py-4">
+            <div class="flex w-full flex-wrap items-center justify-between">
+                <div class="flex items-center gap-2 text-xl font-bold">
+                    <img src="/images/logo.jpg" class="rounded-full" style="width: 3vh;" alt="">
+                    <span>Coopayakat</span>
+                </div>
+                <aside class="grid-flow-col items-center">
+                    <p> ©{{ currentYear }} <a class="link link-hover font-medium" href="https://coopayakat.com/home">Yakatheo</a> </p>
+                </aside>
+                <div class="flex h-5 gap-4">
+                    <a href="https://www.facebook.com/CoopayakatAmazonas" class="link" aria-label="Facebook Link">
+                        <span class="icon-[tabler--brand-facebook] size-5"></span>
+                    </a>
+                </div>
+            </div>
+        </footer>
     </div>
 
 </template>

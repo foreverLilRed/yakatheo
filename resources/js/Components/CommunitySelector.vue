@@ -119,7 +119,9 @@ const selectcommunity = (community) => {
 onMounted(() => {
     document.addEventListener("click", closeDropdown);
     searchcommunitys();
-    selectcommunity(data.comunidad);
+    if(data.comunidad){
+        selectcommunity(data.comunidad);
+    }
 });
 
 onBeforeUnmount(() => {

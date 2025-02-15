@@ -47,7 +47,8 @@ export default {
             </h2>
         </template>
 
-        <div class="px-4 sm:px-8 md:px-12 py-8 md:py-12">
+        <div class="px-4 py-4">
+            <h2 class="text-base-content text-3xl mb-8">Acopios</h2>
             <div class="flex flex-wrap items-center gap-4">
                 <label class="input-group w-full sm:w-auto flex-grow">
                     <span class="input-group-text">
@@ -56,7 +57,7 @@ export default {
                     <input
                         v-model="form.search"
                         type="search"
-                        class="input w-full sm:w-auto placeholder:italic"
+                        class="input w-full placeholder:italic"
                         placeholder="Buscar por nombre, apellidos o DNI..."
                     />
                 </label>

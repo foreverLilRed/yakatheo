@@ -20,7 +20,7 @@ class ProductorController extends Controller
             'productors' => Productor::query()
                 ->orderBy('names')
                 ->filter(RequestFacade::get('search'))
-                ->paginate(25)
+                ->paginate(15)
                 ->withQueryString()
                 ->through(fn($productor) => [
                     'id' => $productor->id,
@@ -35,7 +35,11 @@ class ProductorController extends Controller
                         'certificaciones' => $productor->seals->pluck('name')
                     ],
                     'ventas' => $productor->procurements->count(),
-                ])
+                ]),
+            'segmentacion' => [
+                'socios' => Productor::where('socio', true)->count(),
+                'noSocios' => Productor::where('socio', false)->count(),
+            ]
         ]);
     }
 
