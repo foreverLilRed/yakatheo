@@ -36,7 +36,7 @@ const props = defineProps({
                         <td>{{procurement.unit_price}}</td>
                         <td>{{procurement.total}}</td>
                         <td>
-                            <a :href="`/documents/procurement/${procurement.id}`" class="text-sm text-gray-600 font-thin hover:underline">Ver documento</a>
+                            <a :href="`/documents/procurement/${procurement.id}`" class="text-sm font-base text-blue-600 hover:underline">Ver documento</a>
                         </td>
                     </tr>
                 </tbody>

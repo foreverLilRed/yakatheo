@@ -42,7 +42,7 @@ export default {
 <template>
     <AppLayout title="Créditos">
         <div class="px-4 py-4">
-            <h2 class="text-base-content text-3xl mb-8">Ventas</h2>
+            <h2 class="text-base-content text-3xl mb-8">Creditos</h2>
             <div class="flex flex-wrap items-center gap-4">
                 <label class="input-group w-full sm:w-auto flex-grow">
                     <span class="input-group-text">

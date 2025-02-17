@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\ProcurementEntered;
 use App\Models\Procurement;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Productor;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,12 +20,13 @@ class ProcurementController extends Controller
      */
     public function index()
     {
+        $acopios_por_producto = Product::withCount('procurements')->get();
         return Inertia::render('Procurements/Index', [
-                'procurements' => Procurement::query()
+            'procurements' => Procurement::query()
                 ->with(['productor.community', 'product'])
                 ->orderBy('weight')
                 ->filter(RequestFacade::get('search'))
-                ->paginate(25)
+                ->paginate(15)
                 ->withQueryString()
                 ->through(fn($procurement) => [
                     'id' => $procurement->id,
@@ -34,7 +36,40 @@ class ProcurementController extends Controller
                     'productor' => $procurement->productor ?? 'No identificado',
                     'comunidad' => $procurement->productor->community->name ?? 'No identificado',
                     'total' => $procurement->total(),
-                ])
+                ]),
+            'segmentacion' => [
+                'acopios_por_producto' => $acopios_por_producto->map(function ($item) {
+                    return [
+                        'x' => $item->name,
+                        'y' => $item->procurements_count
+                    ];
+                }),
+                'cantidad_mes_actual' =>  Procurement::where('created_at', '>=', now()->startOfMonth())->count(),
+                'cantidad_mes_pasado' => Procurement::whereBetween('created_at', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()])->count(),
+                'costo_mes' => Procurement::where('created_at', '>=', now()->startOfMonth())->get()->sum(fn($acopio) => $acopio->total()),
+                'tops' => [
+                    'mes' => Productor::withCount([
+                        'procurements' => function ($query) {
+                            $query->where('created_at', '>=', now()->startOfMonth());
+                        }
+                    ])
+                        ->orderByDesc('procurements_count')
+                        ->limit(5)
+                        ->get(['id', 'name', 'procurements_count']),
+
+                    'total' => Productor::withCount('procurements')
+                        ->orderByDesc('procurements_count')
+                        ->limit(5)
+                        ->get(['id', 'name', 'procurements_count']),
+                ],
+                'precios_promedios' => Product::all()->map(function ($producto) {
+                    return [
+                        'producto' => $producto->name,
+                        'promedio' => round($producto->precio_promedio(), 2)
+                    ];
+                })
+
+            ]
         ]);
     }
 
@@ -67,7 +102,7 @@ class ProcurementController extends Controller
             'unit_price.required' => 'El campo precio unitario es obligatorio.',
             'unit_price.numeric' => 'El campo precio unitario debe ser un número decimal o entero.',
             'unit_price.min' => 'El campo precio unitario debe ser mayor a 0.'
-        ]);        
+        ]);
 
         $procurement = Procurement::create($request->all());
 

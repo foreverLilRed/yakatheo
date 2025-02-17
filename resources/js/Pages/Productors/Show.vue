@@ -25,7 +25,6 @@
                                         <th>Lugar</th>
                                         <th>Total</th>
                                         <th>Produccion</th>
-                                        <th>Date</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -34,9 +33,12 @@
                                         <td class="text-nowrap">{{ terrain.place }}</td>
                                         <td>{{ terrain.hr_total }}</td>
                                         <td>{{ terrain.hr_prod }}</td>
+                                        <!--
                                         <td><span class="badge badge-soft badge-success text-xs">Professional</span>
                                         </td>
                                         <td class="text-nowrap">March 1, 2024</td>
+                                        -->
+                                        
                                         <td>
                                             <button @click="deleteTerrain(terrain.id)"
                                                 class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span

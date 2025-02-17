@@ -53,4 +53,8 @@ class Product extends Model
             return $sale->total();
         })->sum();
     }
+
+    public function precio_promedio(){
+        return $this->procurements()->avg('unit_price') ?? 0;
+    }
 }

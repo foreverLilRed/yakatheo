@@ -115,7 +115,7 @@ function registerSale() {
                             <InputError :message="form.errors.buyer_id" class="mt-2" />
                         </div>
                     </div>
-                    <h1 class="text-center font-thin text-lg text-gray-500 my-5">
+                    <h1 class="text-center text-lg text-gray-500 my-5">
                         Stock disponible: {{ avaliableStock }}
                     </h1>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">

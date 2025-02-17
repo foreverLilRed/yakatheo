@@ -79,6 +79,7 @@ const estimatedTotal = computed(() => {
 const handleProductorSelect = (productor) => {
     selectedProductor.value = productor;
 };
+
 </script>
 
 <template>
@@ -88,7 +89,8 @@ const handleProductorSelect = (productor) => {
     <DialogModal :show="modalStatus" @close="closeModal" maxWidth="3xl">
         <template #title>Registrar Acopio</template>
         <template #content>
-            <form @submit.prevent="registerProcurement" >
+            <slot/>
+            <form @submit.prevent="registerProcurement">
                 <div class="mb-5">
                     <div class="grid grid-cols-2 gap-4">
                     <InputSelect :items="products" @item-selected="handleProductChange"
@@ -126,7 +128,7 @@ const handleProductorSelect = (productor) => {
                 </div>
                 <div class="divider">Resultados</div>
                 <div class="my-3">
-                    <p class="font-thin text-sm text-center">Estimado:</p>
+                    <p class="text-sm text-center">Estimado:</p>
                     <p class="font-medium text-2xl text-center">
                         S/. {{ estimatedTotal }}
                     </p>
