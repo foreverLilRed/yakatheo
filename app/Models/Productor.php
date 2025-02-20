@@ -27,6 +27,16 @@ class Productor extends Model
         return $this->belongsToMany(Seal::class, 'productor_seal');
     }
 
+    public function normas()
+    {
+        return $this->belongsToMany(Norma::class, 'productor_norma', 'productor_id', 'norma_id');
+    }
+
+
+    public function condiciones(){
+        return $this->belongsToMany(Condicion::class,'productor_condicion','productor_id', 'condicion_id');
+    }
+
 
     public function terrains()
     {

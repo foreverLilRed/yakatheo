@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Condicion;
+use App\Models\Norma;
 use App\Models\Product;
 use App\Models\Seal;
 use App\Models\User;
@@ -30,13 +32,23 @@ class DatabaseSeeder extends Seeder
         Product::create(['name' => 'SECO 2',]);
         
         Seal::insert([
-            ['name' => 'Orgánico Estados Unidos', 'description' => 'Certificación orgánica en EE.UU.', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Unión Europea', 'description' => 'Certificación orgánica en Europa', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Comercio Justo', 'description' => 'Certificación de comercio justo', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Rainforest Alliance', 'description' => 'Certificación de sostenibilidad', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Cero Deforestación', 'description' => 'Certificación de conservación ambiental', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Agricultura Familiar', 'description' => 'Apoyo a la agricultura familiar', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Conservación Ambiental', 'description' => 'Prácticas sostenibles para el medio ambiente', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+        Norma::insert([
+            ['name' => 'Orgánico Estados Unidos'],
+            ['name' => 'Orgánico Unión europe'],
+            ['name' => 'RTPO']
+        ]);
+
+        Condicion::insert([
+            ['name' => 'Orgánico'],
+            ['name' => 'Transición'],
+            ['name' => 'Nuevo']
         ]);
 
         /*

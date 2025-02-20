@@ -4,7 +4,7 @@
             <div class="bg-base-100 w-full rounded-lg shadow">
                 <h5 class="bg-base-300 rounded-t-lg p-4 text-base font-bold">{{ data.names }} {{ data.surnames }}</h5>
                 <div class="w-full p-4">
-                    <UpdateProductorForm :data="data" :sellos="sellos" :comunidad="comunidad" />
+                    <UpdateProductorForm :data="data" :sellos="sellos" :condiciones="condiciones" :normas="normas" :comunidad="comunidad" />
                 </div>
             </div>
             <div>
@@ -85,6 +85,8 @@ export default {
         comunidad: Object,
         tierras: Object,
         sellos: Object,
+        normas: Object,
+        condiciones: Object,
         acopios: Object,
     },
     methods: {

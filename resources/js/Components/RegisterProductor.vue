@@ -7,6 +7,8 @@ import SaveButton from "./SaveButton.vue";
 import axios from "axios";
 import SealsSelector from "./SealsSelector.vue";
 import CommunitySelector from "./CommunitySelector.vue";
+import NormasSelector from "./NormasSelector.vue";
+import CondicionesSelector from "./CondicionesSelector.vue";
 
 const modalStatus = ref(false);
 const closeModal = () => {
@@ -19,6 +21,8 @@ const form = useForm({
     dni: "",
     birthday: "",
     seal: "",
+    normas: "",
+    condiciones: "",
     community_id: "",
 });
 
@@ -35,6 +39,14 @@ function registerProductor() {
 
 function handleSelectedSeals(selectedSeals) {
     form.seal = selectedSeals;
+}
+
+function handleSelectedNormas(selectedNormas){
+    form.normas = selectedNormas
+}
+
+function handleSelectedCondiciones(selectedCondiciones){
+    form.condiciones = selectedCondiciones
 }
 
 function handleCommunitySelect(community) {
@@ -130,6 +142,24 @@ function handleCommunitySelect(community) {
                     <SealsSelector
                         @selectedSeals="handleSelectedSeals"
                     ></SealsSelector>
+                </div>
+
+                <div class="mb-5">
+                    <p class="block mb-2 text-sm font-medium">
+                        Normas
+                    </p>
+                    <NormasSelector
+                        @selectedNormas="handleSelectedNormas"
+                    ></NormasSelector>
+                </div>
+
+                <div class="mb-5">
+                    <p class="block mb-2 text-sm font-medium">
+                        Condiciones
+                    </p>
+                    <CondicionesSelector
+                        @selectedCondiciones="handleSelectedCondiciones"
+                    ></CondicionesSelector>
                 </div>
 
                 <SaveButton :disabled="form.processing">Registrar</SaveButton>

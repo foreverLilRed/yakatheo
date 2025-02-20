@@ -61,6 +61,8 @@ class ProductorController extends Controller
             'comunidad' => $productor->community ?? null,
             'tierras' => $productor->terrains ?? null,
             'sellos' => $productor->seals()->pluck('seals.id'),
+            'normas' => $productor->normas()->pluck('normas.id'),
+            'condiciones' => $productor->condiciones()->pluck('condiciones.id'),
             'acopios' => $acopiosPorProducto,
         ]);
     }
@@ -74,6 +76,8 @@ class ProductorController extends Controller
                 'dni' => 'required|digits:8', 
                 'birthday' => 'required|date',
                 'seal.*' => 'exists:seals,id', 
+                'normas.*' => 'exists:normas,id', 
+                'condiciones.*' => 'exists:condiciones,id', 
                 'community_id' => 'required|exists:communities,id'
             ],
             [
@@ -101,6 +105,14 @@ class ProductorController extends Controller
         if ($request->has('seal')) {
             $productor->seals()->sync($request->seal);
         }    
+
+        if ($request->has('normas')) {
+            $productor->normas()->sync($request->normas);
+        }    
+
+        if ($request->has('condiciones')) {
+            $productor->condiciones()->sync($request->condiciones);
+        }    
         
     }
 
@@ -113,6 +125,8 @@ class ProductorController extends Controller
                 'birthday' => 'nullable|date',
                 'socio' => 'nullable|boolean',
                 'seal.*' => 'exists:seals,id', 
+                'normas.*' => 'exists:normas,id', 
+                'condiciones.*' => 'exists:condiciones,id', 
                 'community_id' => 'required|exists:communities,id'
             ],
             [
@@ -126,9 +140,11 @@ class ProductorController extends Controller
             ]
             );
 
-        $productor->update(collect($validated)->except(['seal'])->toArray());
+        $productor->update(collect($validated)->except(['seal','normas','condiciones'])->toArray());
 
         $productor->seals()->sync($request->seal ?? []);
+        $productor->normas()->sync($request->normas ?? []);
+        $productor->condiciones()->sync($request->condiciones ?? []);
     }
 
     public function fetchQuery(Request $request){

@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\CondicionesController;
 use App\Http\Controllers\CreditController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\NormasController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProcurementController;
 use App\Http\Controllers\ProductController;
@@ -46,6 +48,8 @@ Route::middleware([
     
     Route::get('/fetch/terrains/{productor}',[TerrainController::class,'fetchOwner'])->name('fetch-terrains-productor');
     Route::get('/fetch/seals', [SealsController::class, 'fetch'])->name('fetch-seals');
+    Route::get('/fetch/normas', [NormasController::class, 'fetch'])->name('fetch-normas');
+    Route::get('/fetch/condiciones', [CondicionesController::class, 'fetch'])->name('fetch-condiciones');
     Route::get('/fetch/products', [ProductController::class, 'fetch'])->name('fetch-seals');
     Route::post('/fetch/adjustement', [ProductController::class, 'adjustement'])->name('adjustement');
     

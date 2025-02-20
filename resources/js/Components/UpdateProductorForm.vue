@@ -1,5 +1,6 @@
 <template>
     <form @submit.prevent="updateProductor" class="needs-validation peer grid gap-y-4">
+        {{ props }}
         <div class="w-full">
             <h6 class="text-lg font-semibold">1. Informacion personal</h6>
             <hr class="mb-4 mt-2" />
@@ -45,7 +46,23 @@
                 @selectedSeals="handleSelectedSeals"
         ></SealsSelector>
         <div class="w-full">
-            <h6 class="text-lg font-semibold">3. Organizacion</h6>
+            <h6 class="text-lg font-semibold">3. Normas</h6>
+            <hr class="mb-4 mt-2" />
+        </div>
+        <NormasSelector
+                :normas="props.normas"
+                @selectedNormas="handleSelectedSeals"
+        ></NormasSelector>
+        <div class="w-full">
+            <h6 class="text-lg font-semibold">4. Condiciones</h6>
+            <hr class="mb-4 mt-2" />
+        </div>
+        <CondicionesSelector
+                :condiciones="props.condiciones"
+                @selectedCondiciones="handleSelectedSeals"
+        ></CondicionesSelector>
+        <div class="w-full">
+            <h6 class="text-lg font-semibold">5. Organizacion</h6>
             <hr class="mb-4 mt-2" />
         </div>
         <div>
@@ -65,15 +82,27 @@ import InputError from './InputError.vue';
 import SealsSelector from './SealsSelector.vue';
 import CommunitySelector from './CommunitySelector.vue';
 import { onMounted } from 'vue';
+import NormasSelector from './NormasSelector.vue';
+import CondicionesSelector from './CondicionesSelector.vue';
 
 const props = defineProps({
     data: Object,
     sellos: Array,
+    normas: Array,
+    condiciones: Array,
     comunidad: Object,
 })
 
 function handleSelectedSeals(selectedSeals) {
     form.seal = selectedSeals;
+}
+
+function handleSelectedNormas(selectedNormas){
+    form.normas = selectedNormas
+}
+
+function handleSelectedCondiciones(selectedCondiciones){
+    form.condiciones = selectedCondiciones
 }
 
 function handleCommunitySelect(community) {
@@ -88,6 +117,8 @@ const form = useForm({
     socio: props.data?.socio ?? '',
     community_id: props.comunidad?.id ?? '',
     seal: props.sellos ?? [],
+    normas: props.normas ?? [],
+    condiciones: props.condiciones ?? []
 })
 
 function updateProductor() {
