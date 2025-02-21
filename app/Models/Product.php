@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\LimiteDeProduccion;
 use ArrayAccess;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,7 +44,7 @@ class Product extends Model
 
     public function earnings($from = null)
     {
-        $query = $this->sales(); 
+        $query = $this->sales();
 
         if ($from) {
             $query->where('created_at', '>=', $from);
@@ -54,7 +55,14 @@ class Product extends Model
         })->sum();
     }
 
-    public function precio_promedio(){
+    public function precio_promedio()
+    {
         return $this->procurements()->avg('unit_price') ?? 0;
     }
+
+    public function limites()
+    {
+        return $this->hasMany(Limite::class);
+    }
+    
 }

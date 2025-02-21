@@ -147,6 +147,18 @@ class ProductorController extends Controller
         $productor->condiciones()->sync($request->condiciones ?? []);
     }
 
+    public function fetchLimites(Productor $productor)
+    {
+        $limites = $productor->detallesProduccion();
+
+        if ($limites->isEmpty()) {
+            return response()->json(['message' => 'No hay límites disponibles para este productor.'], 404);
+        }
+
+        return response()->json($limites);
+    }
+
+
     public function fetchQuery(Request $request){
         $productors = Productor::query()
             ->orderBy('names')

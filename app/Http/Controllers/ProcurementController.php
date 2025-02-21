@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Events\ProcurementEntered;
+use App\Exceptions\LimiteDeProduccion;
 use App\Models\Procurement;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Productor;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request as RequestFacade;
@@ -104,9 +106,21 @@ class ProcurementController extends Controller
             'unit_price.min' => 'El campo precio unitario debe ser mayor a 0.'
         ]);
 
-        $procurement = Procurement::create($request->all());
-
-        event(new ProcurementEntered($procurement));
+        try {
+            $productor = Productor::findOrFail($request->productor_id);
+    
+            $productor->limite($request->product_id, $request->weight);
+    
+            $procurement = Procurement::create($request->all());
+    
+            event(new ProcurementEntered($procurement));
+    
+            return redirect()->back()->with('success', 'Procurement registrado correctamente');
+        } catch (LimiteDeProduccion $e) {
+            return redirect()->back()->with('error', $e->getMessage().': '.$productor->produccionAnual($request->product_id));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error inesperado: '.$e->getMessage());
+        }
     }
 
     /**

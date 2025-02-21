@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\LimiteDeProduccion;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -75,5 +76,59 @@ class Productor extends Model
         return $this->belongsTo(Community::class);
     }
 
+    public function limites(){
+        return $this->hasMany(Limite::class);
+    }
+
+    public function produccionAnual($producto){
+        return $this->procurements()
+                ->where('product_id',$producto)
+                    ->whereYear('created_at', now()->year)
+                        ->sum('weight'); 
+    }
+
+    public function limite($product_id, $quantity)
+    {
+        $producido_anho_actual = $this->produccionAnual($product_id);
+
+        $limite = $this->limites()->where('product_id', $product_id)->first();
+
+        if ($limite && ($producido_anho_actual + $quantity) > $limite->limit) {
+            throw new LimiteDeProduccion();
+        }
+
+        return true;
+    }
+
+    public function detallesProduccion()
+    {
+        return $this->limites()->with('producto')->get()->map(function ($limite) {
+            return [
+                'producto' => $limite->producto?->name ?? 'Desconocido', // Previene errores si producto es null
+                'limite' => (float) $limite->limit,
+                'actual' => (float) $this->produccionAnual($limite->producto?->id ?? 0) // Evita error si producto es null
+            ];
+        });
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($productor) {
+            static::created(function ($productor) {
+                $productos = Product::all(); 
+
+                foreach ($productos as $producto) {
+                    Limite::create([
+                        'productor_id' => $productor->id,
+                        'product_id' => $producto->id,
+                        'limit' => 1000, 
+                    ]);
+                }
+            });
+        });
+    }
 
 }

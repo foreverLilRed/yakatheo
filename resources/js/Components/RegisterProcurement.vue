@@ -43,6 +43,31 @@ const form = useForm({
     unit_price: 0,
 });
 
+const limites = ref([])
+
+watch(
+    selectedProductor,
+    (newValue) => {
+        if (!newValue || typeof newValue.id === 'undefined') {
+            console.error("Error: selectedProductor no tiene un ID válido", newValue);
+            return;
+        }
+
+        console.log("Productor seleccionado:", newValue); 
+        console.log("ID del productor:", newValue.id); 
+
+        axios.get(`/productors/${newValue.id}/limites`)
+            .then((response) => {
+                limites.value = response.data;
+            })
+            .catch((error) => {
+                alert("Error obteniendo los límites del productor:", error);
+            });
+    },
+    { deep: true }
+);
+
+
 function registerProcurement() {
     form.productor_id = selectedProductor.value.id;
     form.post(route("procurement-store"), {
@@ -90,6 +115,15 @@ const handleProductorSelect = (productor) => {
         <template #title>Registrar Acopio</template>
         <template #content>
             <slot/>
+            <div v-if="limites.length > 0" class="mb-4">
+                <div class="divider">Limites</div>
+                <div class="flex flex-wrap gap-3">
+                    <div class="w-fit shadow rounded-lg p-2" v-for="limite in limites">
+                        <h1 class="underline font-base text-black">{{ limite.producto }}</h1>
+                        <p> {{ limite.actual }} de {{ limite.limite }}</p>
+                    </div>
+                </div>
+            </div>
             <form @submit.prevent="registerProcurement">
                 <div class="mb-5">
                     <div class="grid grid-cols-2 gap-4">

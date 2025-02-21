@@ -1,6 +1,5 @@
 <template>
     <form @submit.prevent="updateProductor" class="needs-validation peer grid gap-y-4">
-        {{ props }}
         <div class="w-full">
             <h6 class="text-lg font-semibold">1. Informacion personal</h6>
             <hr class="mb-4 mt-2" />
@@ -51,7 +50,7 @@
         </div>
         <NormasSelector
                 :normas="props.normas"
-                @selectedNormas="handleSelectedSeals"
+                @selectedNormas="handleSelectedNormas"
         ></NormasSelector>
         <div class="w-full">
             <h6 class="text-lg font-semibold">4. Condiciones</h6>
@@ -59,7 +58,7 @@
         </div>
         <CondicionesSelector
                 :condiciones="props.condiciones"
-                @selectedCondiciones="handleSelectedSeals"
+                @selectedCondiciones="handleSelectedCondiciones"
         ></CondicionesSelector>
         <div class="w-full">
             <h6 class="text-lg font-semibold">5. Organizacion</h6>
@@ -129,8 +128,4 @@ function updateProductor() {
         }
     });
 }
-
-onMounted(() => {
-    console.log(props.comunidad)
-})
 </script>

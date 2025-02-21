@@ -87,3 +87,4 @@ Route::middleware([
     Route::post('/communities/store',[CommunityController::class,'store'])->name('community-store');
 });
 
+Route::get('/productors/{productor}/limites',[ProductorController::class,'fetchLimites'])->name('productors-limites');

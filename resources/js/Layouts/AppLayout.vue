@@ -6,6 +6,9 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import { initFlowbite } from 'flowbite';
+import SuccessAlert from '@/Components/SuccessAlert.vue';
+import WarningAlert from '@/Components/WarningAlert.vue';
+import ErrorAlert from '@/Components/ErrorAlert.vue';
 
 defineProps({
     title: String,
@@ -113,7 +116,10 @@ onMounted(() => initFlowbite())
 
     <div class="flex flex-col min-h-screen md:ml-64">
         <main class="flex-1 p-4">
-            <slot />
+            <SuccessAlert :message="$page.props.messages.success"></SuccessAlert>
+            <WarningAlert :message="$page.props.messages.warning"></WarningAlert>
+            <ErrorAlert :message="$page.props.messages.errors"></ErrorAlert>
+            <slot/>
         </main>
 
         <footer class="footer bg-base-200/60 px-6 py-4">

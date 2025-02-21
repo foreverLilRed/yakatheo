@@ -41,6 +41,11 @@ class HandleInertiaRequests extends Middleware
                     ? $request->session()->get('errors')->getBag('default')->toArray()
                     : (object) [];
             },
+            'messages' => [
+                'success' => $request->session()->get('success'),
+                'warning' => $request->session()->get('warning'),
+                'errors' => $request->session()->get('error')
+            ]
         ]);
     }
 }
