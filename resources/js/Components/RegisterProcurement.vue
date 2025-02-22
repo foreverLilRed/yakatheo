@@ -74,6 +74,7 @@ function registerProcurement() {
         onSuccess: () => {
             form.reset();
             modalStatus.value = false;
+            window.location.reload();
         },
     });
 }

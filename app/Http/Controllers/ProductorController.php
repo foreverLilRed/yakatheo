@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Productor;
 use App\Models\Seal;
 use Carbon\Carbon;
@@ -56,6 +57,9 @@ class ProductorController extends Controller
                 'totales' => $grupo->map(fn($acopio) => $acopio->total()),
             ];
         });
+
+        $limites = null;
+        
         return Inertia::render('Productors/Show', [
             'data' => $productor,
             'comunidad' => $productor->community ?? null,
