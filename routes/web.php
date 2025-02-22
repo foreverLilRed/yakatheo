@@ -36,6 +36,7 @@ Route::middleware([
     Route::put('/productors/{productor}',[ProductorController::class,'update'])->name('productors-update');
     Route::get('/productors/fetch-query', [ProductorController::class, 'fetchQuery']);
     Route::get('/productors/{productor}',[ProductorController::class,'show'])->name('productors-show');
+    Route::post('/productors/actualizar-limites/{productor}',[ProductorController::class,'actualizarLimites']);
     
     Route::get('/products',[ProductController::class,'index'])->name('products');
     Route::post('/products/store',[ProductController::class,'store'])->name('product-store');

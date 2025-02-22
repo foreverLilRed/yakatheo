@@ -9,9 +9,10 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class UploadImport implements ToCollection, WithCalculatedFormulas
+class UploadImport implements ToCollection, WithCalculatedFormulas, WithChunkReading
 {
     public $socios, $fecha, $inicio, $fin;
 
@@ -151,7 +152,7 @@ class UploadImport implements ToCollection, WithCalculatedFormulas
                         $procurement->productor_id = $productor ? $productor->id : null;
                         $procurement->product_id = $product_id;
                         $procurement->weight = $kg;
-                        $procurement->unit_price = $total / $kg;
+                        $procurement->unit_price = (float) $total / (float) $kg;
                         $procurement->timestamps = false;
                         $procurement->created_at = Carbon::parse($this->fecha);
                         $procurement->updated_at = Carbon::parse($this->fecha);
@@ -160,5 +161,10 @@ class UploadImport implements ToCollection, WithCalculatedFormulas
                 }
             }
         });
+    }
+
+    public function chunkSize(): int
+    {
+        return 100; // Procesa 100 filas por bloque para evitar sobrecarga
     }
 }

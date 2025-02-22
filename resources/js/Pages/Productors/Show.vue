@@ -1,5 +1,6 @@
 <template>
     <AppLayout>
+        {{limites}}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div class="bg-base-100 w-full rounded-lg shadow">
                 <h5 class="bg-base-300 rounded-t-lg p-4 text-base font-bold">{{ data.names }} {{ data.surnames }}</h5>
@@ -66,6 +67,7 @@
                     </div>
 
                 </div>
+                <Limites :productor="data.id" :limites="limites"></Limites>
             </div>
         </div>
     </AppLayout>
@@ -75,10 +77,11 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import UpdateProductorForm from '@/Components/UpdateProductorForm.vue';
 import RegisterTerrain from '@/Components/RegisterTerrain.vue';
 import AreaChart from '@/Components/AreaChart.vue';
+import Limites from '@/Components/Limites.vue';
 
 export default {
     components: {
-        AppLayout, UpdateProductorForm, RegisterTerrain, AreaChart
+        AppLayout, UpdateProductorForm, RegisterTerrain, AreaChart, Limites
     },
     props: {
         data: Object,
@@ -88,6 +91,7 @@ export default {
         normas: Object,
         condiciones: Object,
         acopios: Object,
+        limites: Object
     },
     methods: {
         deleteTerrain(id) {

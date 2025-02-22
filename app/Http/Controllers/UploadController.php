@@ -21,6 +21,7 @@ class UploadController extends Controller
             'file' => 'required|mimes:xlsx|max:2048', // Solo acepta .xlsx y hasta 2MB
         ]);
 
+        set_time_limit(300);
         Excel::import(new UploadImport($request->socios, $request->fecha, $request->inicio, $request->fin), $request->file);
     }
 }
