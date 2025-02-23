@@ -111,7 +111,7 @@ class Productor extends Model
         });
     }
 
-    /*
+    
     protected static function boot()
     {
         parent::boot();
@@ -130,8 +130,6 @@ class Productor extends Model
             });
         });
     }
-    
-    */
 
 
 }

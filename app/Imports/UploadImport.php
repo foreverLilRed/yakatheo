@@ -61,7 +61,7 @@ class UploadImport implements ToCollection, WithCalculatedFormulas, WithChunkRea
             //$nombres_completos = $this->separarNombreApellido($row[2]);
             $nombres = !empty($row[2]) ? $row[2] : null;
             //$apellidos = $nombres_completos['apellidos'] ?? 'Sin Apellidos';
-            $nacimiento = !empty($row[5]) ? Date::excelToDateTimeObject($row[5])->format('Y-m-d') : null;
+            $nacimiento = !empty($row[5]) && is_numeric($row[5]) ? Date::excelToDateTimeObject($row[5])->format('Y-m-d') : null;
             $comunidadNombre = !empty($row[7]) ? $row[7] : null;
 
             $productor = null;
@@ -84,6 +84,8 @@ class UploadImport implements ToCollection, WithCalculatedFormulas, WithChunkRea
                 $row[20]
             ];
 
+            $comunidad = null;
+
             if ($comunidadNombre !== null) {
                 $comunidad = Community::where('name', 'like', "%{$comunidadNombre}%")->first();
 
@@ -96,15 +98,15 @@ class UploadImport implements ToCollection, WithCalculatedFormulas, WithChunkRea
 
             if ($dni !== null || $nombres !== null) {
                 $query = Productor::query();
-            
+
                 if ($dni !== null) {
                     $query->where('dni', $dni);
                 }
-            
+
                 if ($nombres !== null) {
                     $query->where('names', 'like', "%{$nombres}%");
                 }
-            
+
                 $productor = $query->first();
             }
 
@@ -144,15 +146,21 @@ class UploadImport implements ToCollection, WithCalculatedFormulas, WithChunkRea
                 ];
 
                 foreach ($productos as $product_id => [$kg_index, $total_index]) {
-                    $kg = $row[$kg_index];
-                    $total = $row[$total_index];
+                    $kg = isset($row[$kg_index]) ? (float) $row[$kg_index] : 0;
+                    $total = isset($row[$total_index]) ? (float) $row[$total_index] : 0;
 
-                    if (($kg !== null || $kg != 0) && ($total !== null || $total != 0)) {
+                    if ($kg != 0 && $total != 0) {
                         $procurement = new Procurement();
                         $procurement->productor_id = $productor ? $productor->id : null;
                         $procurement->product_id = $product_id;
                         $procurement->weight = $kg;
-                        $procurement->unit_price = (float) $total / (float) $kg;
+
+                        if ($kg != 0) {
+                            $procurement->unit_price = $total / $kg; // No es necesario el (float) porque ya lo convertimos arriba
+                        } else {
+                            $procurement->unit_price = 0;
+                        }
+
                         $procurement->timestamps = false;
                         $procurement->created_at = Carbon::parse($this->fecha);
                         $procurement->updated_at = Carbon::parse($this->fecha);

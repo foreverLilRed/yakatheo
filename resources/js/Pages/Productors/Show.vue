@@ -1,6 +1,5 @@
 <template>
     <AppLayout>
-        {{limites}}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div class="bg-base-100 w-full rounded-lg shadow">
                 <h5 class="bg-base-300 rounded-t-lg p-4 text-base font-bold">{{ data.names }} {{ data.surnames }}</h5>
